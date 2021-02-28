@@ -1,0 +1,79 @@
+{
+    "extends": [
+        "eslint:all",
+        "plugin:react/all",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
+    "env": {
+        "browser": true,
+        "es2020": true,
+        "node": true,
+        "jest": true
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "array-element-newline": [
+            "error",
+            "consistent"
+        ],
+        "max-len": 0,
+        "max-lines-per-function": 0,
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "function-call-argument-newline": 0,
+        "padded-blocks": 0,
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "one-var": [
+            "error",
+            "never"
+        ],
+        "quote-props": 0,
+        "react/jsx-indent": [
+            2,
+            4
+        ],
+        "react/jsx-indent-props": [
+            2,
+            4
+        ],
+        "react/jsx-filename-extension": 0,
+        "react/react-in-jsx-scope": 0,
+        "react/jsx-no-literals": 0,
+        "react/jsx-one-expression-per-line": 0,
+        "react/jsx-max-depth": 0,
+        "react/function-component-definition": [2,
+            {
+                "namedComponents": "arrow-function"
+            }
+        ],
+        "react/jsx-newline": "off",
+        "react/jsx-no-bind": 0
+    },
+    "ignorePatterns": [
+        "node_modules/",
+        ".next/"
+    ]
+}

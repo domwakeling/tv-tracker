@@ -1,5 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
+const RESPONSE_OK = 200;
+
 export default (req, res) => {
-  res.status(200).json({ name: 'John Doe' })
-}
+    res.status(RESPONSE_OK).json({ name: 'John Doe' });
+};
