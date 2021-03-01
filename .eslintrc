@@ -70,7 +70,8 @@
             }
         ],
         "react/jsx-newline": "off",
-        "react/jsx-no-bind": 0
+        "react/jsx-no-bind": 0,
+        "no-ternary": "off"
     },
     "ignorePatterns": [
         "node_modules/",

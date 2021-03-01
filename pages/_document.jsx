@@ -1,8 +1,8 @@
-/* eslint-disable sort-imports */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+import React from 'react';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../src/theme.js';
 
