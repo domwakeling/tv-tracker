@@ -1,8 +1,25 @@
+/* eslint-disable sort-keys */
 import { createMuiTheme } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 
 // Create a theme instance.
 const theme = createMuiTheme({
+    overrides: {
+        // Style sheet name ⚛️
+        MuiFilledInput: {
+            // Name of the rule
+            root: {
+                // Some CSS
+                backgroundColor: '#f0f6fe',
+                '&:hover': {
+                    backgroundColor: '#ddebfd'
+                },
+                '&.Mui-focused': {
+                    backgroundColor: '#f0f6fe'
+                }
+            }
+        }
+    },
     palette: {
         background: {
             default: '#fff'

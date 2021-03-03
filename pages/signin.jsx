@@ -5,7 +5,7 @@ import SignInUp from '../components/SignInUp.jsx';
 import Typography from '@material-ui/core/Typography';
 
 // eslint-disable-next-line no-extra-parens
-const Home = () => (
+const SignInPage = () => (
     <div>
         <Head>
             <title>Create Next App</title>
@@ -27,4 +27,4 @@ const Home = () => (
     </div>
 );
 
-export default Home;
+export default SignInPage;

@@ -4,13 +4,11 @@ import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-// import Link from '../src/Link.jsx';
+import Link from '../src/Link.jsx';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-// eslint-disable-next-line no-magic-numbers
-
 
 const SignInUp = (props) => {
     const { mode } = props;
@@ -45,18 +43,21 @@ const SignInUp = (props) => {
                                     : 'Sign in'}
                             </Typography>
                         </Box>
-                        <Box my={2}>
-                            <TextField
-                                color="secondary"
-                                fullWidth
-                                label="Name"
-                                name="userName"
-                                onChange={(ev) => setUserData({ ...userData,
-                                    name: ev.target.value })}
-                                value={userData.name}
-                                variant="outlined"
-                            />
-                        </Box>
+                        { mode === constants.MODE_SIGN_UP
+                            ? (
+                                <Box my={2}>
+                                    <TextField
+                                        color="secondary"
+                                        fullWidth
+                                        label="Name"
+                                        name="userName"
+                                        onChange={(ev) => setUserData({ ...userData,
+                                            name: ev.target.value })}
+                                        value={userData.name}
+                                        variant="filled"
+                                    />
+                                </Box>)
+                            : ''}
                         <Box my={2}>
                             <TextField
                                 color="secondary"
@@ -69,7 +70,7 @@ const SignInUp = (props) => {
                                 })}
                                 type="email"
                                 value={userData.email}
-                                variant="outlined"
+                                variant="filled"
                             />
                         </Box>
                         <Box my={2}>
@@ -84,7 +85,7 @@ const SignInUp = (props) => {
                                 })}
                                 type="password"
                                 value={userData.password}
-                                variant="outlined"
+                                variant="filled"
                             />
                         </Box>
                         { mode === constants.MODE_SIGN_UP
@@ -105,7 +106,7 @@ const SignInUp = (props) => {
                                         })}
                                         type="password"
                                         value={userData.confirm}
-                                        variant="outlined"
+                                        variant="filled"
                                     />
                                 </Box>
                             )
@@ -120,7 +121,7 @@ const SignInUp = (props) => {
                         </Button>
                         <Button
                             color="primary"
-                            // onClick={clear}
+                            // OnClick={clear}
                             size="small"
                             variant="contained"
                         >
@@ -129,6 +130,28 @@ const SignInUp = (props) => {
                     </form>
                 </Box>
             </Paper>
+            <Box
+                mt={4}
+                textAlign="center"
+            >
+                <Typography
+                    component="p"
+                    variant="h6"
+                >
+                    Want to
+                    {' '}
+                    <Link href={mode === constants.MODE_SIGN_IN
+                        ? '/signup'
+                        : '/signin'}
+                    >
+                        { mode === constants.MODE_SIGN_IN
+                            ? 'create an account'
+                            : 'sign in'}
+                    </Link>
+                    {' '}
+                    intead?
+                </Typography>
+            </Box>
         </Container>
     );
 };
