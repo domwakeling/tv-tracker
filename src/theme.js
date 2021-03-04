@@ -5,6 +5,12 @@ import { red } from '@material-ui/core/colors';
 // Create a theme instance.
 const theme = createMuiTheme({
     overrides: {
+        MuiAppBar: {
+            colorPrimary: {
+                backgroundColor: '#f29626',
+                color: 'white'
+            }
+        },
         // Style sheet name ⚛️
         MuiFilledInput: {
             // Name of the rule

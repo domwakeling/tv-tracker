@@ -21,7 +21,6 @@ const SignInUp = (props) => {
 
     const handleSubmit = (ev) => {
         ev.preventDefault();
-        console.log(userData);
     };
 
     return (

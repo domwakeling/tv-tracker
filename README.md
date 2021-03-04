@@ -32,3 +32,18 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Adding next-auth
+
+Install packages (need `mongodb` if using database to backend anything).
+
+```
+npm install --save next-auth mongodb
+```
+
+Add environment variables as necessary - see [the `next-auth`
+example](https://github.com/nextauthjs/next-auth-example/blob/main/.env.local.example).
+
+## TODO
+- [ ] look at using a callback when signing in to redirect (using router) rather than sending to a
+        new url (latter causes the whole page to reload, think of this as a one-page app instead)
