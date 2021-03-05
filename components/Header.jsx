@@ -3,6 +3,7 @@ import { signOut, useSession } from 'next-auth/client';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -32,6 +33,7 @@ const Header = () => {
                         TV Tracker
                     </Typography>
                     <Box flexGrow="1" />
+                    <Button color="inherit">About</Button>
                     { session &&
                         <Tooltip
                             arrow
