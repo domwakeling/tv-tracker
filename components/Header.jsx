@@ -6,8 +6,10 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
+import Link from '../src/Link.jsx';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Router from 'next/router';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
@@ -25,15 +27,31 @@ const Header = () => {
         setAnchorEl(null);
     };
 
+    const handleAboutClick = (ev) => {
+        ev.preventDefault();
+        Router.push('/about');
+    };
+
     return (
         <AppBar position="static">
             <Container>
                 <Toolbar disableGutters>
-                    <Typography variant="h4" >
-                        TV Tracker
-                    </Typography>
+                    <Link
+                        color="inherit"
+                        href="/"
+                        underline="none"
+                    >
+                        <Typography variant="h4">
+                            TV Tracker
+                        </Typography>
+                    </Link>
                     <Box flexGrow="1" />
-                    <Button color="inherit">About</Button>
+                    <Button
+                        color="inherit"
+                        onClick={handleAboutClick}
+                    >
+                        About
+                    </Button>
                     { session &&
                         <Tooltip
                             arrow
