@@ -1,5 +1,5 @@
 /* eslint-disable sort-keys */
-const dummy = {
+const dummyShowSearch = {
     'Search': [
         {
             'Title': 'Batman: The Animated Series',
@@ -76,4 +76,4 @@ const dummy = {
     'Response': 'True'
 };
 
-export default dummy;
+export default dummyShowSearch;

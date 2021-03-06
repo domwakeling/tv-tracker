@@ -1,13 +1,10 @@
 import * as constants from '../../../../src/constants';
 import axios from 'axios';
-import dummy from '../../../../src/dummy_search';
-
-// Set DUMMY_SEARCH true to use a local set of data (prevents excessive API calls in testing)
-const DUMMY_SEARCH = true;
+import dummySearchInfo from '../../../../src/dummySearchInfo';
 
 const handler = async (req, res) => {
-    if (DUMMY_SEARCH) {
-        res.status(constants.RESPONSE_OK).json(dummy);
+    if (process.env.USE_DUMMY_DATA && process.env.USE_DUMMY_DATA === 'yes') {
+        res.status(constants.RESPONSE_OK).json(dummySearchInfo);
     } else {
         const URL = process.env.OMDB_URL;
         const API_KEY = process.env.OMDB_KEY;
