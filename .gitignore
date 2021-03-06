@@ -32,3 +32,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# design files
+_design/
