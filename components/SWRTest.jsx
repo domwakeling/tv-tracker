@@ -1,11 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
-import ContentLoading from '../components/ContentLoading.jsx';
+import ContentLoading from './ContentLoading.jsx';
 import Typography from '@material-ui/core/Typography';
 import { useSession } from 'next-auth/client';
 import useUser from '../lib/hooks/useUser';
 
-const SWRTest = () => {
+const SWRTestUser = () => {
     const [session] = useSession();
     // eslint-disable-next-line no-underscore-dangle
     const { user, isLoading, isError } = useUser((session && session.accessToken) || null);
@@ -35,11 +36,21 @@ const SWRTest = () => {
                     From the useUser SWR hook
                 </Typography> }
             {/* If the SWR is loading, show it */}
-            { isLoading && <ContentLoading />}
-            { session && <Typography>user: {'\u007B'}</Typography>}
-            { session && user && <Typography>&nbsp;&nbsp;userId: {user.userId},</Typography> }
+            { isLoading && <ContentLoading /> }
+            { session && <Typography>user: {'\u007B'}</Typography> }
+            { session && user && <Typography>&nbsp;&nbsp;_id: {user._id},</Typography> }
             { session && user &&
-                <Typography>&nbsp;&nbsp;accessToken: {user.accessToken},</Typography> }
+                <Typography>&nbsp;&nbsp;shows: {'\u005B'}</Typography> }
+            { session && user && user.shows.map((show) => (
+                <Typography
+                    key={show}
+                >
+                    &nbsp;&nbsp;&nbsp;&nbsp;{show},
+                </Typography>
+            ))}
+
+            { session && user &&
+                <Typography>&nbsp;&nbsp;{'\u005D'},</Typography>}
             { session && <Typography gutterBottom>{'\u007D'}</Typography> }
             { session &&
                 <Typography
@@ -48,7 +59,7 @@ const SWRTest = () => {
                 >
                     From the nextauth session
                 </Typography> }
-            { session && <Typography gutterBottom>session: {'\u007B'}</Typography>}
+            { session && <Typography gutterBottom>session: {'\u007B'}</Typography> }
             { session &&
                 <Typography
                     gutterBottom
@@ -69,4 +80,4 @@ const SWRTest = () => {
     );
 };
 
-export default SWRTest;
+export default SWRTestUser;

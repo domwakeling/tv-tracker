@@ -20,12 +20,32 @@ const handler = async (req, res) => {
         // Construct options
         const options = {};
 
+        // Get the session, and the all-important userId
         const session = await sessions.findOne(query, options);
-        res.status(constants.RESPONSE_OK).
-            json({
-                accessToken: accesstoken,
-                userId: session.userId
-            });
+
+        // Get second database and collection
+        const db2 = client.db(process.env.SHOW_DB_NAME);
+        const users = db2.collection(process.env.USERS_COLLECTION_NAME);
+
+        // Construct second query
+        const query2 = { _id: session.userId };
+
+        // Construct second options
+        const options2 = {};
+
+        // Try to retrieve information from database
+        let user = await users.findOne(query2, options2);
+
+        // If no information, new user => insert into database
+        if (user === null) {
+            user = {
+                _id: session.userId,
+                shows: []
+            };
+            await users.insertOne(user);
+        }
+
+        res.status(constants.RESPONSE_OK).json(user);
 
     } catch (err) {
         res.status(constants.REPONSE_ERROR).json({ message: err.message });
