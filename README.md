@@ -1,37 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TV Tracker
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+A personal project using Next.js and Material-UI.
 
 ## Adding next-auth
 
@@ -44,6 +13,23 @@ npm install --save next-auth mongodb
 Add environment variables as necessary - see [the `next-auth`
 example](https://github.com/nextauthjs/next-auth-example/blob/main/.env.local.example).
 
-## TODO
-- [ ] look at using a callback when signing in to redirect (using router) rather than sending to a
-        new url (latter causes the whole page to reload, think of this as a one-page app instead)
+Add an api route at `api/auth/[...nextauth].js` - which sets out the providers you are using.
+
+For this site I have written a custom sign-in form component, `SignInNextAuth.jsx`. Have **not**
+(so far) written custom sign-in, sign-out or error pages (which are available, see documentation).
+
+**NOTE** Have had intermittent issues with auth failing and a console log referring to MongoDB not
+being listed as an optional dependency. Following advice on the NextAuth GitHub page, have added a
+new `OptionalPeerDependcies` section in `package.json`, which *appears* to have fixed the issue.
+
+## Persisting, and collating, user data on the client
+
+Using SWR (from Vercel, who also develop Next.js) to create a React Hook for the user. Data is held
+in the 'shows' database, structure is:
+
+```
+_id: ObjectId (assigned in NextAuth and replicated in the shows db),
+shows: [
+  *array of show objects, structure to be determined*
+]
+```
