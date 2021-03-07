@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import * as constants from '../src/constants';
+import * as constants from '../lib/constants';
 import ContentLoading from '../components/ContentLoading.jsx';
 import Grid from '@material-ui/core/Grid';
 import Head from 'next/head';

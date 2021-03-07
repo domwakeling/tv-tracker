@@ -1,6 +1,6 @@
-import * as constants from '../../../../src/constants';
+import * as constants from '../../../../lib/constants';
 import axios from 'axios';
-import dummySeasonInfo from '../../../../src/dummySeasonInfo';
+import dummySeasonInfo from '../../../../data/dummySeasonInfo';
 
 // eslint-disable-next-line max-statements
 const handler = async (req, res) => {

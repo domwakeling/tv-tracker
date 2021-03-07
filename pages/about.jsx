@@ -19,17 +19,23 @@ const About = () => (
             </Typography>
             <Typography
                 gutterBottom
-                variant="body1"
+                variant="subtitle1"
             >
                 TV Tracker lets you find TV shows, add them to a watchlist, and track which
                 episodes you have viewed. It is principally a test project to experiment and
-                learn some new things, but is available to use (and for the technically minded, the
-                code is available on
+                learn some new things, but is available to use for free.
+            </Typography>
+            <Typography
+                gutterBottom
+                variant="body1"
+            >
+                For the technically minded, the code behind the site is available on
                 {' '}
                 <Link href="https://nextjs.org/">
-                    GitHub
-                </Link>) &amp; please feel free to deploy your own copy, or engage on GitHub to
-                improve the project!
+                    <b>GitHub</b>
+                </Link>) &mdash; please feel free engage on GitHub to improve the project! (If you
+                deploy your own copy of the site, I would appreciate an attribution and link back
+                to the original repository)
             </Typography>
             <Typography
                 gutterBottom
@@ -60,8 +66,8 @@ const About = () => (
                 variant="body1"
             >
                 The account name and your “real” name (as provided to the third-party provider) are
-                held and stored by TV Tracker. This is the minimum information required to make a
-                user account.
+                held and stored by TV Tracker. This is the minimum information required to make
+                user accounts work.
             </Typography>
             <Typography
                 gutterBottom
@@ -97,13 +103,12 @@ const About = () => (
                 Built using
                 {' '}
                 <Link href="https://nextjs.org/">
-                    Next.js
+                    <b>Next.js</b>
                 </Link>
                 {' '} with {' '}
                 <Link href="https://material-ui.com/">
-                    Material UI
-                </Link>
-                &nbsp;components.
+                    <b>Material UI</b>
+                </Link> components.
             </Typography>
             <Typography
                 gutterBottom
@@ -112,7 +117,7 @@ const About = () => (
                 Accounts/user &apos;auth&apos; based on
                 {' '}
                 <Link href="https://next-auth.js.org/">
-                    NextAuth.js
+                    <b>NextAuth.js</b>
                 </Link>.
             </Typography>
             <Typography
@@ -122,9 +127,8 @@ const About = () => (
                 Backed by a
                 {' '}
                 <Link href="https://www.mongodb.com/cloud/atlas">
-                    MongoDB Cloud Atlas
-                </Link>
-                &nbsp;database.
+                    <b>MongoDB Cloud Atlas</b>
+                </Link> database.
             </Typography>
             <Typography
                 gutterBottom
@@ -133,9 +137,8 @@ const About = () => (
                 Data provided through
                 {' '}
                 <Link href="http://www.omdbapi.com/">
-                    The Open Movie Database
-                </Link>
-                &nbsp;API.
+                    <b>The Open Movie Database</b>
+                </Link> API.
             </Typography>
         </>
     </Layout>

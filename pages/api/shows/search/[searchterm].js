@@ -1,6 +1,6 @@
-import * as constants from '../../../../src/constants';
+import * as constants from '../../../../lib/constants';
 import axios from 'axios';
-import dummySearchInfo from '../../../../src/dummySearchInfo';
+import dummySearchInfo from '../../../../data/dummySearchInfo';
 
 const handler = async (req, res) => {
     if (process.env.USE_DUMMY_DATA && process.env.USE_DUMMY_DATA === 'yes') {

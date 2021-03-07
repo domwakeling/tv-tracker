@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { Provider } from 'next-auth/client';
 import React from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
-import theme from '../src/theme';
+import theme from '../styles/theme';
 
 const MyApp = (props) => {
     const { Component, pageProps } = props;
