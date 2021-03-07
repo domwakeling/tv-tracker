@@ -2,6 +2,7 @@
 import Head from 'next/head';
 import Layout from '../components/Layout.jsx';
 import Link from '@material-ui/core/Link';
+import SWRTest from '../components/SWRTest.jsx';
 import Typography from '@material-ui/core/Typography';
 
 const About = () => (
@@ -140,6 +141,7 @@ const About = () => (
                     <b>The Open Movie Database</b>
                 </Link> API.
             </Typography>
+            <SWRTest />
         </>
     </Layout>
 );

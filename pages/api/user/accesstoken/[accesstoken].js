@@ -1,23 +1,37 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable max-statements */
 import * as constants from '../../../../lib/constants';
-// import axios from 'axios';
-// import dummySeasonInfo from '../../../../data/dummySeasonInfo';
+import { MongoClient } from 'mongodb';
 
-// eslint-disable-next-line max-statements
-// const handler = async (req, res) => {
-const handler = (req, res) => {
-
+const handler = async (req, res) => {
     const { accesstoken } = req.query;
-    // res.status(constants.RESPONSE_OK).json({ accesstoken });
-    setTimeout(() => {
-        res.status(constants.RESPONSE_OK).json({ accessToken: accesstoken, userId: 'ID not found yet' });
-    }, 2000);
+    const client = new MongoClient(process.env.AUTH_DB_URL, { useUnifiedTopology: true });
 
-    //     try {
-    
-    //     } catch (err) {
-    //         res.status(constants.REPONSE_ERROR).json({ message: err.message });
-    //     }
-    // }
+    try {
+        await client.connect();
+
+        // Get the database and collection
+        const db = client.db(process.env.AUTH_DB_NAME);
+        const sessions = db.collection(process.env.SESSIONS_COLLECTION_NAME);
+
+        // Construct query
+        const query = { accessToken: accesstoken };
+
+        // Construct options
+        const options = {};
+
+        const session = await sessions.findOne(query, options);
+        res.status(constants.RESPONSE_OK).
+            json({
+                accessToken: accesstoken,
+                userId: session.userId
+            });
+
+    } catch (err) {
+        res.status(constants.REPONSE_ERROR).json({ message: err.message });
+    } finally {
+        await client.close();
+    }
 };
 
 export default handler;
