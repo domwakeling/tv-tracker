@@ -42,17 +42,19 @@ const About = () => (
                 gutterBottom
                 variant="body1"
             >
-                The site will not use your personal information for any reason other than user
-                account; it will not pass that information for any other party or service; and it
-                will not use any account “privileges” beyond those needed for user accounts.
+                The site will <b>not</b> use your personal information for any reason other than
+                user account; it will <b>not</b> pass that information to any other party or
+                service; and it will <b>not</b> use any account “privileges” beyond those needed for
+                user accounts.
             </Typography>
             <Typography
                 gutterBottom
                 variant="body2"
             >
                 Dependent on the service, some other privileges  may be <b>allowed</b> (you should
-                be shown a list by the third party provider when you are asked for permission in the
-                first sign-in). Be assured that TV Tracker will not <b>use</b> any such privileges.
+                be shown a list by the third party provider when you are asked for permission the
+                first time you sign-in). Be assured that TV Tracker will not <b>use</b> any such
+                privileges unless stated above.
             </Typography>
             <br />
             <Typography

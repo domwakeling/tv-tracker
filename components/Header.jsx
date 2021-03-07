@@ -36,8 +36,17 @@ const Header = () => {
         <AppBar position="static">
             <Container>
                 <Toolbar disableGutters>
+                    <Box mr={1}>
+                        <img
+                            alt="logo"
+                            color="primary"
+                            height="40"
+                            src="/logo_60.png"
+                        />
+                    </Box>
                     <Link
                         color="inherit"
+                        display="inline"
                         href="/"
                         underline="none"
                     >

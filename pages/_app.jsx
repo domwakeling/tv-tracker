@@ -30,7 +30,7 @@ const MyApp = (props) => {
                     name="viewport"
                 />
                 <link
-                    href="/favicon.ico"
+                    href="/favicon.png"
                     rel="icon"
                 />
             </Head>
