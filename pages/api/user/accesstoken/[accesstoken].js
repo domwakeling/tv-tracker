@@ -36,8 +36,6 @@ const handler = async (req, res) => {
         // Try to retrieve information from database
         let user = await users.findOne(query2, options2);
 
-        console.log("User retrieved from DB:\n", user);
-
         // If no information, new user => insert into database
         if (user === null) {
             user = {
