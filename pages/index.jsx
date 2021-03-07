@@ -13,7 +13,7 @@ const Home = (props) => {
     return (
         <Layout>
             <Head>
-                <title>Create Next App</title>
+                <title>Home - TV Tracker</title>
             </Head>
             <>
                 {/* If still loading, show a circular progress indicator */}
@@ -30,6 +30,11 @@ const Home = (props) => {
                     >
                         Interactive content needed here!
                     </Typography> }
+                <br />
+                <hr />
+                <Typography variant="h3">
+                    SWR Testing
+                </Typography>
             </>
         </Layout>
     );

@@ -13,7 +13,9 @@ const ShowSearchForm = (props) => {
     return (
         <Grid
             item
-            xs={4}
+            lg={4}
+            md={8}
+            xs={12}
         >
             <Box mt={-1}>
                 <Paper elevation={6}>

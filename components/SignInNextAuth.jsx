@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import PropTypes from 'prop-types';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import Typography from '@material-ui/core/Typography';
 import { signIn } from 'next-auth/client';
 
@@ -26,8 +27,9 @@ const SignInNextAuth = ({ providerList }) => (
             Please sign in to continue
         </Typography>
         <Box
+            alignItems="center"
             display="flex"
-            justifyContent="center"
+            flexDirection="column"
             py="30px"
         >
             {Object.values(providerList).map((provider) => (
@@ -41,7 +43,9 @@ const SignInNextAuth = ({ providerList }) => (
                         type="button"
                         variant="contained"
                     >
-                        <GitHubIcon />
+                        { provider.name === 'GitHub'
+                            ? <GitHubIcon />
+                            : <TwitterIcon /> }
                         &nbsp;
                         Sign in with {provider.name}
                     </Button>
@@ -54,7 +58,7 @@ const SignInNextAuth = ({ providerList }) => (
         >
             First time here? Sign in
             { Object.values(providerList).length > ONE
-                ? ' using one of the options above'
+                ? ' using one of the options above '
                 : ' ' }
             to get started!
         </Typography>

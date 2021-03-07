@@ -40,7 +40,7 @@ const AddShow = () => {
     return (
         <Layout>
             <Head>
-                <title>Create Next App</title>
+                <title>Add A New Show - TV Tracker</title>
             </Head>
             <>
                 <Typography
@@ -61,7 +61,8 @@ const AddShow = () => {
                     />
                     <Grid
                         item
-                        xs={8}
+                        lg={8}
+                        xs={12}
                     >
                         <Grid
                             container
