@@ -52,7 +52,7 @@ const AddShow = () => {
                 <br />
                 <Grid
                     container
-                    spacing={2}
+                    spacing={4}
                 >
                     <ShowSearchForm
                         handleFormSubmit={submitSearch}

@@ -10,7 +10,7 @@ const ShowCard = (props) => {
     const matches = useMediaQuery('(min-width:600px) and (max-width:959px)');
 
     return (
-        <Card>
+        <Card raised>
             <CardMedia
                 component="img"
                 height={matches
