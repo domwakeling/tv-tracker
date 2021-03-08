@@ -8,15 +8,15 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const SearchShowCard = (props) => {
     const { imageUrl, title } = props;
-    const matches = useMediaQuery('(min-width:600px) and (max-width:959px)');
+    const matches = useMediaQuery('(max-width:959px)');
 
     return (
         <Card raised>
             <CardMedia
                 component="img"
                 height={matches
-                    ? '300'
-                    : '400'}
+                    ? '450'
+                    : '350'}
                 image={imageUrl || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
                 title={title}
             />

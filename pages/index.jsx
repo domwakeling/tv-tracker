@@ -39,6 +39,7 @@ const Home = (props) => {
                     <>
                         <IconButton
                             aria-label="addshow"
+                            color="primary"
                             onClick={handleModalOpen}
                         >
                             <AddCircleIcon />
