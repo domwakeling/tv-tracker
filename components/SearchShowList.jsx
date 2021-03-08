@@ -14,6 +14,7 @@ const SearchShowList = (props) => {
         >
             { shows && shows.Search && shows.Search.map((show) => (
                 <Grid
+                    display="flex"
                     item
                     key={show.imdbID}
                     md={4}

@@ -13,51 +13,47 @@ const SearchShowForm = (props) => {
     return (
         <Grid
             item
-            lg={4}
-            md={8}
             xs={12}
         >
-            <Box mt={-1}>
-                <Paper elevation={6}>
-                    <Box mx={2}>
-                        <form
-                            autoComplete="off"
-                            noValidate
-                            onSubmit={handleFormSubmit}
-                        >
-                            <Box pt={1}>
-                                <Typography
-                                    component="h2"
-                                    variant="h6"
-                                >
-                                    Find a show
-                                </Typography>
-                            </Box>
-                            <Box my={2}>
-                                <TextField
-                                    color="secondary"
-                                    fullWidth
-                                    label="Search Term"
-                                    name="search"
-                                    onChange={(ev) => setSearchTerm(ev.target.value)}
-                                    type="search"
-                                    value={searchTerm}
-                                    variant="filled"
-                                />
-                            </Box>
-                            <Button
-                                color="secondary"
-                                size="large"
-                                type="submit"
-                                variant="contained"
+            <Paper elevation={6}>
+                <Box mx={2}>
+                    <form
+                        autoComplete="off"
+                        noValidate
+                        onSubmit={handleFormSubmit}
+                    >
+                        <Box pt={1}>
+                            <Typography
+                                component="h2"
+                                variant="h6"
                             >
-                                Submit
-                            </Button>
-                        </form>
-                        <br />
-                    </Box>
-                </Paper>
-            </Box>
+                                Find a show
+                            </Typography>
+                        </Box>
+                        <Box my={2}>
+                            <TextField
+                                color="secondary"
+                                fullWidth
+                                label="Search Term"
+                                name="search"
+                                onChange={(ev) => setSearchTerm(ev.target.value)}
+                                type="search"
+                                value={searchTerm}
+                                variant="filled"
+                            />
+                        </Box>
+                        <Button
+                            color="secondary"
+                            size="large"
+                            type="submit"
+                            variant="contained"
+                        >
+                            Submit
+                        </Button>
+                    </form>
+                    <br />
+                </Box>
+            </Paper>
         </Grid>
     );
 };
