@@ -4,8 +4,8 @@ import ContentLoading from '../components/ContentLoading.jsx';
 import Grid from '@material-ui/core/Grid';
 import Head from 'next/head';
 import Layout from '../components/Layout.jsx';
-import ShowList from '../components/ShowList.jsx';
-import ShowSearchForm from '../components/ShowSearchForm.jsx';
+import SearchShowForm from '../components/SearchShowForm.jsx';
+import SearchShowList from '../components/SearchShowList.jsx';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import { useState } from 'react';
@@ -54,7 +54,7 @@ const AddShow = () => {
                     container
                     spacing={4}
                 >
-                    <ShowSearchForm
+                    <SearchShowForm
                         handleFormSubmit={submitSearch}
                         searchTerm={searchTerm}
                         setSearchTerm={setSearchTerm}
@@ -77,7 +77,7 @@ const AddShow = () => {
                                     <ContentLoading />
                                 </Grid> }
                             { !loading &&
-                                <ShowList shows={shows} /> }
+                                <SearchShowList shows={shows} /> }
                         </Grid>
                     </Grid>
                 </Grid>

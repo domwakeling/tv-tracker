@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-const ShowSearchForm = (props) => {
+const SearchShowForm = (props) => {
     const { handleFormSubmit, searchTerm, setSearchTerm } = props;
 
     return (
@@ -62,10 +62,10 @@ const ShowSearchForm = (props) => {
     );
 };
 
-ShowSearchForm.propTypes = {
+SearchShowForm.propTypes = {
     handleFormSubmit: PropTypes.func.isRequired,
     searchTerm: PropTypes.string.isRequired,
     setSearchTerm: PropTypes.func.isRequired
 };
 
-export default ShowSearchForm;
+export default SearchShowForm;

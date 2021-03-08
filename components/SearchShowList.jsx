@@ -1,9 +1,9 @@
 /* eslint-disable no-extra-parens */
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import ShowCard from './ShowCard.jsx';
+import SearchShowCard from './SearchShowCard.jsx';
 
-const ShowList = (props) => {
+const SearchShowList = (props) => {
     const { shows } = props;
 
     return (
@@ -20,7 +20,7 @@ const ShowList = (props) => {
                     sm={6}
                     xs={12}
                 >
-                    <ShowCard
+                    <SearchShowCard
                         imageUrl={show.Poster === 'N/A'
                             ? null
                             : show.Poster}
@@ -32,8 +32,8 @@ const ShowList = (props) => {
     );
 };
 
-ShowList.propTypes = {
+SearchShowList.propTypes = {
     shows: PropTypes.shape().isRequired
 };
 
-export default ShowList;
+export default SearchShowList;

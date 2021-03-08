@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const ShowCard = (props) => {
+const SearchShowCard = (props) => {
     const { imageUrl, title } = props;
     const matches = useMediaQuery('(min-width:600px) and (max-width:959px)');
 
@@ -36,13 +36,13 @@ const ShowCard = (props) => {
     );
 };
 
-ShowCard.propTypes = {
+SearchShowCard.propTypes = {
     imageUrl: PropTypes.string,
     title: PropTypes.string.isRequired
 };
 
-ShowCard.defaultProps = {
+SearchShowCard.defaultProps = {
     imageUrl: null
 };
 
-export default ShowCard;
+export default SearchShowCard;
