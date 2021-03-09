@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import { useState } from 'react';
 
-const SearchShowModal = ({ onCloseHandler, openState }) => {
+const SearchShowModal = ({ onCloseHandler, openState, user }) => {
     const [shows, setShows] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(false);
@@ -125,7 +125,10 @@ const SearchShowModal = ({ onCloseHandler, openState }) => {
                                             <ContentLoading />
                                         </Grid>}
                                     {!loading &&
-                                        <SearchShowList shows={shows} />}
+                                        <SearchShowList
+                                            shows={shows}
+                                            user={user}
+                                        />}
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -138,7 +141,8 @@ const SearchShowModal = ({ onCloseHandler, openState }) => {
 
 SearchShowModal.propTypes = {
     onCloseHandler: PropTypes.func.isRequired,
-    openState: PropTypes.bool.isRequired
+    openState: PropTypes.bool.isRequired,
+    user: PropTypes.shape().isRequired
 };
 
 export default SearchShowModal;

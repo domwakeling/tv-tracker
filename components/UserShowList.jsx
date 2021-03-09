@@ -1,10 +1,10 @@
 /* eslint-disable no-extra-parens */
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import SearchShowCard from './SearchShowCard.jsx';
+// import SearchShowCard from './SearchShowCard.jsx';
 
-const SearchShowList = (props) => {
-    const { shows, user } = props;
+const UserShowList = (props) => {
+    const { user } = props;
 
     return (
         <Grid
@@ -12,7 +12,7 @@ const SearchShowList = (props) => {
             container
             spacing={2}
         >
-            { shows && shows.Search && shows.Search.map((show) => (
+            { user && user.shows && user.shows.map((show) => (
                 <Grid
                     display="flex"
                     item
@@ -21,23 +21,20 @@ const SearchShowList = (props) => {
                     sm={6}
                     xs={12}
                 >
-                    <SearchShowCard
-                        id={show.imdbID}
-                        imageUrl={show.Poster === 'N/A'
+                    <div style= {{ height: "200", width: "200", backgroundColor: "red"}} />
+                        {/* imageUrl={show.Poster === 'N/A'
                             ? null
                             : show.Poster}
                         title={show.Title}
-                        user={user}
-                    />
+                    /> */}
                 </Grid>
             ))}
         </Grid>
     );
 };
 
-SearchShowList.propTypes = {
-    shows: PropTypes.shape().isRequired,
+UserShowList.propTypes = {
     user: PropTypes.shape().isRequired
 };
 
-export default SearchShowList;
+export default UserShowList;

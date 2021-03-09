@@ -1,5 +1,8 @@
+import * as constants from '../lib/constants';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import PropTypes from 'prop-types';
@@ -7,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const SearchShowCard = (props) => {
-    const { imageUrl, title } = props;
+    const { id, imageUrl, title, user } = props;
     const matches = useMediaQuery('(max-width:959px)');
 
     return (
@@ -31,17 +34,20 @@ const SearchShowCard = (props) => {
                     </Typography>
                 </CardContent>
             </Box>
-            {/* <CardActions className={classes.cardActions}>
-                <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}><ThumbUpAltIcon fontSize="small" /> Like {post.likeCount} </Button>
-                <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}><DeleteIcon fontSize="small" /> Delete</Button>
-            </CardActions> */}
+            <CardActions>
+                { user.showIds.indexOf(id) < constants.ZERO
+                    ? <Button color="secondary">Add to my shows</Button>
+                    : <Button color="primary">Remove</Button> }
+            </CardActions>
         </Card>
     );
 };
 
 SearchShowCard.propTypes = {
+    id: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    user: PropTypes.shape().isRequired
 };
 
 SearchShowCard.defaultProps = {

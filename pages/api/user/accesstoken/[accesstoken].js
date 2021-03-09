@@ -45,6 +45,8 @@ const handler = async (req, res) => {
             await users.insertOne(user);
         }
 
+        user.showIds = user.shows.map((show) => show.id);
+
         res.status(constants.RESPONSE_OK).json(user);
 
     } catch (err) {

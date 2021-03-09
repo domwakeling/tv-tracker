@@ -30,6 +30,26 @@ in the 'shows' database, structure is:
 ```
 _id: ObjectId (assigned in NextAuth and replicated in the shows db),
 shows: [
-  *array of show objects, structure to be determined*
+  {
+    _id: Object Id (assigned using the show's imdbId),
+  }
 ]
 ```
+## Summary of API routes
+
+| Route  | Comment |
+|--------|---------|
+| `api/auth/` | |
+| ` .../[...nextauth]` | Used by `nextauth.js` package |
+| `api/shows/` | |
+| ` .../getshowfromdb/[imdbid]` | Retrieves show info from Mongodb<sup>1</sup> |
+| ` .../getshowinfo/[imdbid]` | Retrieves show info from OMDB<sup>2</sup> |
+| ` ...search/[searchterm]` | Retrieves a search from OMDB<sup>3</sup> |
+| `api/user/` | |
+| ` .../accesstoken/[accesstoken]` | Uses session `accessToken` to get the user from Mongodb<sup>4</sup> |
+
+**Footnotes**
+1. In the form `{ show: {show-object} }`, or `{ show: null }` if not in the Mongodb
+2. See `data/dummyShowInfo.js` for an example
+3. Limited to ten results, see `data/dummsySearchinfo.js` from an example
+4. Looks up `accessToken` in the Auth database, gets user _id, looks that up in the Shows database
