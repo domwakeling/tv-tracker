@@ -1,5 +1,7 @@
 # TV Tracker
 
+![Vercel](http://therealsujitk-vercel-badge.vercel.app/?app=tv-tracker-app)
+
 A personal project using Next.js and Material-UI.
 
 ## Adding next-auth
