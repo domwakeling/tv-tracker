@@ -1,10 +1,17 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-extra-parens */
+import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-// import SearchShowCard from './SearchShowCard.jsx';
+import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const UserShowList = (props) => {
     const { user } = props;
+    const matches = useMediaQuery('(max-width:959px)');
 
     return (
         <Grid
@@ -16,17 +23,32 @@ const UserShowList = (props) => {
                 <Grid
                     display="flex"
                     item
-                    key={show.imdbID}
+                    key={show._id}
                     md={4}
                     sm={6}
                     xs={12}
                 >
-                    <div style= {{ height: "200", width: "200", backgroundColor: "red"}} />
-                        {/* imageUrl={show.Poster === 'N/A'
-                            ? null
-                            : show.Poster}
-                        title={show.Title}
-                    /> */}
+                    <Card raised>
+                        <CardMedia
+                            component="img"
+                            height={matches
+                                ? '450'
+                                : '350'}
+                            image={show.imageUrl || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
+                            title={show.title}
+                        />
+                        <Box minHeight="96px">
+                            <CardContent>
+                                <Typography
+                                    color="textSecondary"
+                                    component="p"
+                                    variant="subtitle1"
+                                >
+                                    {show.title}
+                                </Typography>
+                            </CardContent>
+                        </Box>
+                    </Card>
                 </Grid>
             ))}
         </Grid>

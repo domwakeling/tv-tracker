@@ -46,9 +46,11 @@ shows: [
 | `api/shows/` | |
 | ` .../getshowfromdb/[imdbid]` | Retrieves show info from Mongodb<sup>1</sup> |
 | ` .../getshowinfo/[imdbid]` | Retrieves show info from OMDB<sup>2</sup> |
+| ` .../saveshowtodb` | Save a show into Mongodb Shows database |
 | ` ...search/[searchterm]` | Retrieves a search from OMDB<sup>3</sup> |
 | `api/user/` | |
 | ` .../accesstoken/[accesstoken]` | Uses session `accessToken` to get the user from Mongodb<sup>4</sup> |
+| ` .../addshow` | Adds a show to a user in Mongodb Shows database |
 
 **Footnotes**
 1. In the form `{ show: {show-object} }`, or `{ show: null }` if not in the Mongodb

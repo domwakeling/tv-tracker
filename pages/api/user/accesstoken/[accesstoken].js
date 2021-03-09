@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable object-curly-newline */
 /* eslint-disable max-statements */
 import * as constants from '../../../../lib/constants';
@@ -45,7 +46,7 @@ const handler = async (req, res) => {
             await users.insertOne(user);
         }
 
-        user.showIds = user.shows.map((show) => show.id);
+        user.showIds = user.shows.map((show) => show._id);
 
         res.status(constants.RESPONSE_OK).json(user);
 
