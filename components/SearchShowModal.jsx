@@ -1,12 +1,16 @@
 /* eslint-disable max-statements */
 import * as constants from '../lib/constants';
+import Backdrop from '@material-ui/core/Backdrop';
 import Box from '@material-ui/core/Box';
+import CancelIcon from '@material-ui/icons/Cancel';
 import ContentLoading from '../components/ContentLoading.jsx';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
 import PropTypes from 'prop-types';
 import SearchShowForm from '../components/SearchShowForm.jsx';
 import SearchShowList from '../components/SearchShowList.jsx';
+import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import { useState } from 'react';
@@ -48,67 +52,86 @@ const SearchShowModal = ({ onCloseHandler, openState }) => {
 
     return (
         <Modal
-            aria-describedby="add-show modal"
-            aria-labelledby="add show"
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+                timeout: 500
+            }}
+            aria-describedby="add-show-modal"
+            aria-labelledby="add-show"
+            closeAfterTransition
             disableScrollLock
             onClose={modalCloseHandler}
             open={openState}
             // eslint-disable-next-line react/forbid-component-props
             style={{ overflow: 'scroll' }}
         >
-            <div style={{
-                backgroundColor: 'white',
-                borderRadius: '0.5rem',
-                margin: '30px auto',
-                maxWidth: '90%',
-                // eslint-disable-next-line no-dupe-keys
-                maxWidth: '800px',
-                outline: 0
-            }}
+            <Slide
+                in={openState}
+                transition={750}
             >
-                <Box
-                    mx={2}
-                    px={2}
-                    py={2}
+                <div style={{
+                    backgroundColor: 'white',
+                    borderRadius: '0.5rem',
+                    margin: '30px auto',
+                    maxWidth: '800px',
+                    outline: 0,
+                    width: '80%'
+                }}
                 >
-                    <Typography
-                        content="h1"
-                        variant="h3"
+                    <Box
+                        mx={2}
+                        px={2}
+                        py={2}
                     >
-                        Add Show
-                    </Typography>
-                    <br />
-                    <Grid
-                        container
-                        spacing={2}
-                    >
-                        <SearchShowForm
-                            handleFormSubmit={submitSearch}
-                            searchTerm={searchTerm}
-                            setSearchTerm={setSearchTerm}
-                        />
-                        <Grid
-                            item
-                            xs={12}
-                        >
-                            <Grid
-                                container
-                                wrap="wrap"
+                        <Box display="flex">
+                            <Typography
+                                content="h1"
+                                variant="h3"
                             >
-                                {loading &&
-                                    <Grid
-                                        item
-                                        xs={12}
-                                    >
-                                        <ContentLoading />
-                                    </Grid>}
-                                {!loading &&
-                                    <SearchShowList shows={shows} />}
+                                Add Show
+                            </Typography>
+                            <Box flexGrow="1" />
+                            <IconButton
+                                aria-label="close modal"
+                                color="primary"
+                                onClick={modalCloseHandler}
+                            >
+                                <CancelIcon color="secondary" />
+                            </IconButton>
+                        </Box>
+                        <br />
+                        <Grid
+                            container
+                            spacing={2}
+                        >
+                            <SearchShowForm
+                                handleFormSubmit={submitSearch}
+                                searchTerm={searchTerm}
+                                setSearchTerm={setSearchTerm}
+                            />
+                            <Grid
+                                item
+                                xs={12}
+                            >
+                                <Grid
+                                    container
+                                    wrap="wrap"
+                                >
+                                    {loading &&
+                                        <Grid
+                                            item
+                                            xs={12}
+                                        >
+                                            <ContentLoading />
+                                        </Grid>}
+                                    {!loading &&
+                                        <SearchShowList shows={shows} />}
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
-                </Box>
-            </div>
+                    </Box>
+                </div>
+            </Slide>
         </Modal>
     );
 };
