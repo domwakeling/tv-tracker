@@ -3,13 +3,27 @@
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import UserShowCard from './UserShowCard.jsx';
+import UserShowModal from './UserShowModal.jsx';
+import { useState } from 'react';
 
 const UserShowList = (props) => {
     const { user } = props;
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalShowId, setModalShowId] = useState(null);
 
-    const clickHandler = (ev, showId) => {
+    const handleModalOpen = () => {
+        setModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setModalShowId(null);
+        setModalOpen(false);
+    };
+
+    const showClickHandler = (ev, showId) => {
         ev.preventDefault();
-        console.log('clickHandler() in UserShowList was called for showId:', showId);
+        setModalShowId(showId);
+        handleModalOpen();
     };
 
     return (
@@ -28,11 +42,17 @@ const UserShowList = (props) => {
                     xs={6}
                 >
                     <UserShowCard
-                        clickHandler={clickHandler}
+                        clickHandler={showClickHandler}
                         show={show}
                     />
                 </Grid>
             ))}
+            <UserShowModal
+                modalShowId={modalShowId}
+                onCloseHandler={handleModalClose}
+                openState={modalOpen}
+                user={user}
+            />
         </Grid>
     );
 };

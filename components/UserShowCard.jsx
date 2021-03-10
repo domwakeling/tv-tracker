@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-statements */
 /* eslint-disable no-extra-parens */
-import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -31,17 +30,16 @@ const UserShowCard = (props) => {
                     image={show.imageUrl || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
                     title={show.title}
                 />
-                <Box minHeight="96px">
-                    <CardContent>
-                        <Typography
-                            color="textSecondary"
-                            component="p"
-                            variant="subtitle1"
-                        >
-                            {show.title}
-                        </Typography>
-                    </CardContent>
-                </Box>
+                <CardContent>
+                    <Typography
+                        color="textSecondary"
+                        component="p"
+                        noWrap
+                        variant="subtitle1"
+                    >
+                        {show.title}
+                    </Typography>
+                </CardContent>
             </Card>
         </div>
     );
