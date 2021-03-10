@@ -11,10 +11,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
+import { mutate } from 'swr';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useSession } from 'next-auth/client';
 
 const SearchShowCard = (props) => {
     const { id, imageUrl, title, user } = props;
+    const [session] = useSession();
     const matches = useMediaQuery('(max-width:959px)');
 
     const addShow = async () => {
@@ -40,9 +43,10 @@ const SearchShowCard = (props) => {
                 show
             });
 
-            console.log(res);
+            mutate(`api/user/accesstoken/${session.accessToken}`);
 
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log('err: ', err.message);
         }
     };

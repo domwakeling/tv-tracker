@@ -42,11 +42,11 @@ const SWRTestUser = () => {
             { session && user &&
                 <Typography>&nbsp;&nbsp;shows: {'\u005B'}</Typography> }
             { session && user && user.shows && user.shows.map((show) => (
-                <Typography
-                    key={show}
-                >
-                    &nbsp;&nbsp;&nbsp;&nbsp;{show},
-                </Typography>
+                <div key={show._id}>
+                    <Typography>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{show.title},
+                    </Typography>
+                </div>
             ))}
 
             { session && user &&

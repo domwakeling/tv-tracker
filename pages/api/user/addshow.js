@@ -45,12 +45,7 @@ const handler = async (req, res) => {
         // ** TODO ** consider case where show _id already exists - this MAY not prevent it
 
         // Add show to user
-        const ret = await users.updateOne(query, updateDocument);
-
-        if (ret.modifiedCount === constants.ONE) {
-            console.log('Successfully added show to user, modifiedCount:', ret.modifiedCount);
-        }
-
+        await users.updateOne(query, updateDocument);
         res.status(constants.RESPONSE_OK).json({ message: 'success' });
 
     } catch (err) {

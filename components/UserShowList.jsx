@@ -24,9 +24,9 @@ const UserShowList = (props) => {
                     display="flex"
                     item
                     key={show._id}
-                    md={4}
-                    sm={6}
-                    xs={12}
+                    md={3}
+                    sm={4}
+                    xs={6}
                 >
                     <Card raised>
                         <CardMedia
