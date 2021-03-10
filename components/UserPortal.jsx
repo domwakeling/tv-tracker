@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ContentLoading from './ContentLoading.jsx';
 import SearchShowModal from '../components/SearchShowModal.jsx';
@@ -36,12 +37,15 @@ const UserPortal = () => {
                     >
                         Your Shows
                     </Typography>
-                    <Button
-                        color="primary"
-                        onClick={handleModalOpen}
-                    >
-                        Add a show
-                    </Button>
+                    <Box mb={2}>
+                        <Button
+                            color="primary"
+                            onClick={handleModalOpen}
+                            variant="contained"
+                        >
+                            Add a show
+                        </Button>
+                    </Box>
                     <SearchShowModal
                         onCloseHandler={handleModalClose}
                         openState={modalOpen}

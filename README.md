@@ -4,39 +4,77 @@
 
 A personal project using Next.js and Material-UI.
 
-## Adding next-auth
+## User 'auth' with NextAuth.js
 
-Install packages (need `mongodb` if using database to backend anything).
+Using the excellent [NextAuth.js](https://next-auth.js.org/) package which provides for non-password
+sign-ins; set up to use GitHub and Twitter at present, although nothing to prevent adding other
+providers. Documentation is good and (after kicking the wheels a bit) easy to understand.
+
+To use: 
+
+1. Install packages (need `mongodb` if using database to backend anything).
 
 ```
 npm install --save next-auth mongodb
 ```
 
-Add environment variables as necessary - see [the `next-auth`
-example](https://github.com/nextauthjs/next-auth-example/blob/main/.env.local.example).
+2. Add environment variables as necessary - see [the `next-auth`
+example `.env.local` file](https://github.com/nextauthjs/next-auth-example/blob/main/.env.local.example).
 
-Add an api route at `api/auth/[...nextauth].js` - which sets out the providers you are using.
+3. Add an api route at `api/auth/[...nextauth].js` - which sets out the providers you are using.
 
-For this site I have written a custom sign-in form component, `SignInNextAuth.jsx`. Have **not**
-(so far) written custom sign-in, sign-out or error pages (which are available, see documentation).
+4. If you want bespoke styling, you can either provide your own sign-in, sign-out and error pages,
+or write a component - I've taken the latter approach, see `/components/SignInNextAuth.jsx`.
 
-**NOTE** Have had intermittent issues with auth failing and a console log referring to MongoDB not
-being listed as an optional dependency. Following advice on the NextAuth GitHub page, have added a
-new `OptionalPeerDependcies` section in `package.json`, which *appears* to have fixed the issue.
+> Had intermittent issues with auth failing and a console log referring to MongoDB not
+> being listed as an optional dependency. Following advice on the NextAuth GitHub page, have added a
+> new `OptionalPeerDependcies` section in `package.json`, which *appears* to have fixed the issue.
 
 ## Persisting, and collating, user data on the client
 
-Using SWR (from Vercel, who also develop Next.js) to create a React Hook for the user. Data is held
-in the 'shows' database, structure is:
+Using [SWR](https://swr.vercel.app) (from Vercel, who also develop Next.js) to create a React Hook
+to persist user data. SWR also provides a `mutate` function which essentially forces a call to the
+Mongodb database to refresh user info.
+
+In particular have followed the examples for [creating a custom React
+hook](https://swr.vercel.app/getting-started#make-it-reusable), which is in `lib/hooks/useUser.js`.
+
+## Database structures
+
+Data for the 'tv shows' side of the app is stored in a database called 'Shows'. This has two
+collections, 'shows' and 'users'.
+
+Structure for the users collection is:
 
 ```
-_id: ObjectId (assigned in NextAuth and replicated in the shows db),
-shows: [
+_id: ObjectId,          // assigned in NextAuth and replicated in the shows db
+shows: [                // array of objects representing each show the user has selected
   {
-    _id: Object Id (assigned using the show's imdbId),
+    _id: string,        // the imdbId for the show
+    imageUrl: string,   // url for a poster, or N/A
+    title: string,
+    watched: [          // includes an array for each season ...
+      [bools]           // ... which contain sub-arrays of true/false bools, one for each episode
+    ]
   }
 ]
 ```
+
+The high-level structure for the shows collection is:
+
+```
+_id: string,            // assigned in NextAuth and replicated in the shows db
+seasonsInfo: {
+  ...                   // information on each season, with full episode details
+},
+showInfo: {
+  ...                   // information on the overall show
+}
+```
+
+See `/data/dummySeasonInfo.js` for an example of the data that is held within the `seasonsInfo`  and
+`shownfo` dictionaries.
+
 ## Summary of API routes
 
 | Route  | Comment |
