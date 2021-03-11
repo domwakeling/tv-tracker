@@ -16,20 +16,24 @@ import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
-const UserShowModal = ({ modalShowId, onCloseHandler, openState, user }) => {
-    const [watched, setWatched] = useState([]);
+const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userShows }) => {
+    const [lastWatched, setLastWatched] = useState({});
+    const [activeShow, setActiveShow] = useState({});
 
     useEffect(() => {
         if (modalShowId) {
-            setWatched(user.shows.filter((show) => show._id === modalShowId)[constants.ZERO].watched);
+            setLastWatched(userShows.
+                filter((show) => show._id === modalShowId)[constants.ZERO].lastWatched);
+            setActiveShow(userShows.filter((show) => show._id === modalShowId)[constants.ZERO]);
         } else {
-            setWatched([]);
+            setLastWatched({});
+            setActiveShow({});
         }
     }, [modalShowId]);
 
     const modalCloseHandler = (event) => {
         event.preventDefault();
-        setWatched([]);
+        setLastWatched({});
         onCloseHandler();
     };
 
@@ -62,9 +66,9 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, user }) => {
                 }}
                 >
                     {/* Show a loading circle if no user or showId */}
-                    { (!user || !modalShowId) && <ContentLoading /> }
+                    { (!userId || !modalShowId) && <ContentLoading /> }
                     {/* Wrap the content to avoid errors with no user or show */}
-                    {user && modalShowId &&
+                    { modalShowId &&
                         <Box
                             mx={2}
                             px={2}
@@ -75,10 +79,7 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, user }) => {
                                     content="h1"
                                     variant="h4"
                                 >
-                                    {user.
-                                        shows.
-                                        filter((show) => (
-                                            show._id === modalShowId))[constants.ZERO].title}
+                                    {activeShow.title}
                                 </Typography>
                                 <Box flexGrow="1" />
                                 <IconButton
@@ -96,51 +97,6 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, user }) => {
                                 spacing={2}
                             >
                                 {/* Grid item for season title  */}
-                                <Grid
-                                    item
-                                    md={3}
-                                >
-                                    <Grid container>
-                                        {watched.map((season, seasonIdx) => (
-                                            <Grid
-                                                item
-                                                // eslint-disable-next-line react/no-array-index-key
-                                                key={`S${seasonIdx}`}
-                                                xs={12}
-                                            >
-                                                <Typography
-                                                    gutterBottom
-                                                    variant="subtitle1"
-                                                >
-                                                    SEASON {seasonIdx + constants.ONE}
-                                                </Typography>
-                                            </Grid>
-                                        ))}
-                                    </Grid>
-                                </Grid>
-                                {/* Grid item for season details  */}
-                                <Grid
-                                    item
-                                    md={9}
-                                >
-                                    <Grid container>
-                                        {watched.map((season, seasonIdx) => (
-                                            <Grid
-                                                item
-                                                // eslint-disable-next-line react/no-array-index-key
-                                                key={`SE${seasonIdx}`}
-                                                xs={12}
-                                            >
-                                                <Typography
-                                                    gutterBottom
-                                                    variant="body"
-                                                >
-                                                    episodes for {seasonIdx + constants.ONE}
-                                                </Typography>
-                                            </Grid>
-                                        ))}
-                                    </Grid>
-                                </Grid>
                             </Grid>
                             <Box
                                 display="flex"
@@ -168,10 +124,15 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, user }) => {
 };
 
 UserShowModal.propTypes = {
-    modalShowId: PropTypes.string.isRequired,
+    modalShowId: PropTypes.string,
     onCloseHandler: PropTypes.func.isRequired,
     openState: PropTypes.bool.isRequired,
-    user: PropTypes.shape().isRequired
+    userId: PropTypes.string.isRequired,
+    userShows: PropTypes.arrayOf(PropTypes.shape()).isRequired
+};
+
+UserShowModal.defaultProps = {
+    modalShowId: null
 };
 
 export default UserShowModal;

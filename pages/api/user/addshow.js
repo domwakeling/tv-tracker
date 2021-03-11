@@ -15,23 +15,16 @@ const handler = async (req, res) => {
         const db = client.db(process.env.SHOW_DB_NAME);
         const users = db.collection(process.env.USERS_COLLECTION_NAME);
 
-        // Construct array of 'false' for season/episodes
-        const watched = show.seasonsInfo.
-            sort((s1, s2) => parseInt(s1.Season, constants.DEC) - parseInt(s2.Season, constants.DEC)).
-            map((season) => {
-                const watch = [];
-                for (let idx = 0; idx < season.Episodes.length; idx += constants.ONE) {
-                    watch.push(false);
-                }
-                return watch;
-            });
-
         // Construct new document
         const newShow = {
             _id: show._id,
             imageUrl: show.showInfo.Poster,
-            title: show.showInfo.Title,
-            watched
+            lastEpisode: {
+                episode: constants.ZERO,
+                season: constants.ZERO
+            },
+            lastWatched: new Date(),
+            title: show.showInfo.Title
         };
 
         // Construct query
@@ -42,7 +35,7 @@ const handler = async (req, res) => {
             $addToSet: { shows: newShow }
         };
 
-        // ** TODO ** consider case where show _id already exists - this MAY not prevent it
+        // The UI is expected to prevent a show from being added twice ...
 
         // Add show to user
         await users.updateOne(query, updateDocument);

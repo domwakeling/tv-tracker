@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
+import * as constants from '../lib/constants';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ContentLoading from './ContentLoading.jsx';
@@ -33,6 +34,7 @@ const UserPortal = () => {
                 <>
                     <Typography
                         component="h1"
+                        gutterBottom
                         variant="h4"
                     >
                         Your Shows
@@ -46,12 +48,25 @@ const UserPortal = () => {
                             Add a show
                         </Button>
                     </Box>
+                    <hr />
+                    { user.shows.length === constants.ZERO &&
+                        <Typography
+                            color="primary"
+                            component="h2"
+                            variant="h5"
+                        >
+                            Add a show to get started ...
+                        </Typography> }
                     <SearchShowModal
                         onCloseHandler={handleModalClose}
                         openState={modalOpen}
-                        user={user}
+                        userId={user._id}
+                        userShows={user.showIds}
                     />
-                    <UserShowList user={user} />
+                    <UserShowList
+                        userId={user._id}
+                        userShows={user.shows}
+                    />
                 </> }
             {/* If there's an error, show it */}
             { session && isError &&

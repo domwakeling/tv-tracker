@@ -55,6 +55,8 @@ between the documents and the changelog there's enough there to work it out.
 Data for the 'tv shows' side of the app is stored in a database called 'Shows'. This has two
 collections, 'shows' and 'users'.
 
+### Users
+
 Structure for the users collection is:
 
 ```
@@ -62,14 +64,23 @@ _id: ObjectId,          // assigned in NextAuth and replicated in the shows db
 shows: [                // array of objects representing each show the user has selected
   {
     _id: string,        // the imdbId for the show
-    imageUrl: string,   // url for a poster, or N/A
-    title: string,
-    watched: [          // includes an array for each season ...
-      [bools]           // ... which contain sub-arrays of true/false bools, one for each episode
-    ]
+    imageUrl: string,   // url for a poster, or N/A (replicates Shows collection data)
+    title: string,      // show title (replicates Shows collection data)
+    lastEpisode: {
+      season: int,      // season, as 1-based
+      episode: int      // episode, as 1-based
+    },
+    lastWatched: date   // date of the last time the show object was updated
   }
 ]
 ```
+
+When a user is retrieved from the database (using `api/user/accesstoken/[accesstoken]`), the object
+that is retrieved includes another key, `showIds`, which is an unsorted array of the individual
+`_id`s for all shows within the user's `shows` array. This is computed to avoid wasted storage or
+potential data inconsistencies.
+
+### Shows
 
 The high-level structure for the shows collection is:
 

@@ -1,25 +1,29 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-statements */
 /* eslint-disable no-extra-parens */
-import * as constants from '../lib/constants';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import ContentLoading from './ContentLoading.jsx';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import { mutate } from 'swr';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useSession } from 'next-auth/client';
+import { useState } from 'react';
 
 const SearchShowCard = (props) => {
-    const { id, imageUrl, title, user } = props;
+    const { id, imageUrl, modalCloseHandler, title, userHas, userId } = props;
     const [session] = useSession();
+    const [updating, setUpdating] = useState(false);
     const matches = useMediaQuery('(max-width:959px)');
 
     const addShow = async () => {
+        setUpdating(true);
         try {
             // Get show (or null) from Mongodb
             let res = await axios(`/api/shows/getshowfromdb/${id}`);
@@ -38,15 +42,19 @@ const SearchShowCard = (props) => {
 
             // Send the user's _id and show details to 'addshow'
             res = await axios.post('api/user/addshow', {
-                _id: user._id,
+                _id: userId,
                 show
             });
 
             mutate(`api/user/accesstoken/${session.accessToken}`);
+            setUpdating(false);
+            // eslint-disable-next-line no-empty-function
+            modalCloseHandler({ preventDefault: () => {} });
 
         } catch (err) {
             // eslint-disable-next-line no-console
             console.log('err: ', err.message);
+            setUpdating(false);
         }
     };
 
@@ -73,12 +81,14 @@ const SearchShowCard = (props) => {
             <CardActions>
                 <Button
                     color="secondary"
-                    disabled={user.showIds.indexOf(id) >= constants.ZERO}
+                    disabled={userHas}
                     onClick={addShow}
                     variant="contained"
                 >
-                    Add to my shows
+                    Add show
                 </Button>
+                <Box flexGrow="1" />
+                {updating && <ContentLoading /> }
             </CardActions>
         </Card>
     );
@@ -87,8 +97,10 @@ const SearchShowCard = (props) => {
 SearchShowCard.propTypes = {
     id: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
+    modalCloseHandler: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
-    user: PropTypes.shape().isRequired
+    userHas: PropTypes.bool.isRequired,
+    userId: PropTypes.string.isRequired
 };
 
 SearchShowCard.defaultProps = {

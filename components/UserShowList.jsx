@@ -6,8 +6,7 @@ import UserShowCard from './UserShowCard.jsx';
 import UserShowModal from './UserShowModal.jsx';
 import { useState } from 'react';
 
-const UserShowList = (props) => {
-    const { user } = props;
+const UserShowList = ({ userId, userShows }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalShowId, setModalShowId] = useState(null);
 
@@ -32,33 +31,37 @@ const UserShowList = (props) => {
             container
             spacing={2}
         >
-            { user && user.shows && user.shows.map((show) => (
-                <Grid
-                    display="flex"
-                    item
-                    key={show._id}
-                    md={3}
-                    sm={4}
-                    xs={6}
-                >
-                    <UserShowCard
-                        clickHandler={showClickHandler}
-                        show={show}
-                    />
-                </Grid>
-            ))}
+            { userShows && userShows.
+                sort((s1, s2) => new Date(s2.lastWatched) - new Date(s1.lastWatched)).
+                map((show) => (
+                    <Grid
+                        display="flex"
+                        item
+                        key={show._id}
+                        md={3}
+                        sm={4}
+                        xs={6}
+                    >
+                        <UserShowCard
+                            clickHandler={showClickHandler}
+                            show={show}
+                        />
+                    </Grid>
+                ))}
             <UserShowModal
                 modalShowId={modalShowId}
                 onCloseHandler={handleModalClose}
                 openState={modalOpen}
-                user={user}
+                userId={userId}
+                userShows={userShows}
             />
         </Grid>
     );
 };
 
 UserShowList.propTypes = {
-    user: PropTypes.shape().isRequired
+    userId: PropTypes.string.isRequired,
+    userShows: PropTypes.arrayOf(PropTypes.shape()).isRequired
 };
 
 export default UserShowList;
