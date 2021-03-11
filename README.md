@@ -39,6 +39,17 @@ Mongodb database to refresh user info.
 In particular have followed the examples for [creating a custom React
 hook](https://swr.vercel.app/getting-started#make-it-reusable), which is in `lib/hooks/useUser.js`.
 
+## API for TV shows
+
+Using the [Open Movie Database](http://www.omdbapi.com/) API &mdash; which appears to hold similar 
+data to IMDb, but is available open source. I'm presently using the *absolutely free* version, which 
+is rate-limited to 1,000 queries per day, but the developer uses Patreon and opens up much larger
+rate limits (100,000 queries per day at £1/month, for instance).
+
+Documentation is s touch sparse (for instance the main docs don't mention that there's a query
+parameter `&season=<num>` to get a complete episode list for a given season of a given show) but
+between the documents and the changelog there's enough there to work it out.
+
 ## Database structures
 
 Data for the 'tv shows' side of the app is stored in a database called 'Shows'. This has two
