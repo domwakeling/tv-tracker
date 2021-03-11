@@ -20,13 +20,12 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, user }) => {
     const [watched, setWatched] = useState([]);
 
     useEffect(() => {
-        // Update the document title using the browser API
         if (modalShowId) {
             setWatched(user.shows.filter((show) => show._id === modalShowId)[constants.ZERO].watched);
         } else {
             setWatched([]);
         }
-    });
+    }, [modalShowId]);
 
     const modalCloseHandler = (event) => {
         event.preventDefault();
