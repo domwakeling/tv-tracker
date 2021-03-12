@@ -18,6 +18,9 @@ const handler = async (req, res) => {
         // Construct new document
         const newShow = {
             _id: show._id,
+            episodes: show.seasonsInfo.
+                sort((s1, s2) => parseInt(s1.Season, constants.DEC) - parseInt(s2.Season, constants.DEC)).
+                map((season) => season.Episodes.length),
             imageUrl: show.showInfo.Poster,
             lastEpisode: {
                 episode: constants.ZERO,

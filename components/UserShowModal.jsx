@@ -14,27 +14,101 @@ import Modal from '@material-ui/core/Modal';
 import PropTypes from 'prop-types';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
+import UserShowEpisode from './UserShowEpisode.jsx';
 import axios from 'axios';
 
 const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userShows }) => {
-    const [lastWatched, setLastWatched] = useState({});
+    const [lastSeen, setLastSeen] = useState({});
     const [activeShow, setActiveShow] = useState({});
+    const [activeShowDetail, setActiveShowDetail] = useState({});
+
+    const getActiveShowDetail = async () => {
+        const res = await axios(`/api/shows/getshowfromdb/${modalShowId}`);
+        const { show } = res.data;
+        setActiveShowDetail(show);
+    };
 
     useEffect(() => {
         if (modalShowId) {
-            setLastWatched(userShows.
-                filter((show) => show._id === modalShowId)[constants.ZERO].lastWatched);
+            setLastSeen(userShows.
+                filter((show) => show._id === modalShowId)[constants.ZERO].lastEpisode);
             setActiveShow(userShows.filter((show) => show._id === modalShowId)[constants.ZERO]);
+            getActiveShowDetail();
         } else {
-            setLastWatched({});
+            setLastSeen({});
             setActiveShow({});
+            setActiveShowDetail({});
         }
     }, [modalShowId]);
 
     const modalCloseHandler = (event) => {
         event.preventDefault();
-        setLastWatched({});
+        setLastSeen({});
         onCloseHandler();
+    };
+
+    const noneWatched = () => (
+        lastSeen.season === constants.ZERO && lastSeen.episode === constants.ZERO
+    );
+
+    const allWatched = () => (
+        activeShow.episodes &&
+        lastSeen.season === activeShow.episodes.length &&
+        lastSeen.episode === activeShow.episodes[activeShow.episodes.length - constants.ONE]
+    );
+
+    const showTitle = (episode) => {
+        if (!episode || !episode.season || !episode.episode) {
+            return '';
+        }
+        if (episode.season === constants.ZERO || episode.episode === constants.ZERO) {
+            return '';
+        }
+        if (!activeShowDetail || !activeShowDetail.seasonsInfo) {
+            return '...';
+        }
+        if (episode.season > activeShow.episodes.length) {
+            return '';
+        }
+        if (episode.episode > activeShow.episodes[episode.season.length - constants.ONE]) {
+            return '';
+        }
+        // Dealt with all edge cases, now get the title
+        return activeShowDetail.
+            seasonsInfo.
+            filter((season) => parseInt(season.Season, constants.DEC) === episode.season)[constants.ZERO].
+            Episodes.
+            filter((ep) => parseInt(ep.Episode, constants.DEC) === episode.episode)[constants.ZERO].
+            Title;
+    };
+
+    const nextEpisode = () => {
+        if (noneWatched()) {
+            return {
+                episode: 1,
+                season: 1
+            };
+        }
+
+        if (!activeShow.episodes || allWatched()) {
+            return {
+                episode: 0,
+                season: 0
+            };
+        }
+
+        let nextEp = lastSeen.episode + constants.ONE;
+        let nextSe = lastSeen.season;
+
+        if (activeShow.episodes[nextSe - constants.ONE] === nextEp) {
+            nextEp = constants.ONE;
+            nextSe += constants.ONE;
+        }
+
+        return {
+            episode: nextEp,
+            season: nextSe
+        };
     };
 
     return (
@@ -91,12 +165,27 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
                                 </IconButton>
                             </Box>
                             <hr />
-                            {/* Grid container for the outer shows list */}
+                            {/* Grid container for the shows info list */}
                             <Grid
                                 container
                                 spacing={2}
                             >
-                                {/* Grid item for season title  */}
+                                <Grid item>
+                                    <UserShowEpisode
+                                        episode={lastSeen}
+                                        title={showTitle(lastSeen)}
+                                        unWatched={noneWatched()}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <UserShowEpisode
+                                        allSeen={allWatched()}
+                                        episode={activeShow.episodes
+                                            ? nextEpisode()
+                                            : {}}
+                                        title={showTitle(nextEpisode())}
+                                    />
+                                </Grid>
                             </Grid>
                             <Box
                                 display="flex"
