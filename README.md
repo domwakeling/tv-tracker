@@ -65,7 +65,8 @@ shows: [                // array of objects representing each show the user has 
   {
     _id: string,        // the imdbId for the show
     imageUrl: string,   // url for a poster, or N/A (replicates Shows collection data)
-    title: string,      // show title (replicates Shows collection data)
+    title: string,      // show title (replicates Shows collection data),
+    episodes: [int],    // array of season-lengths
     lastEpisode: {
       season: int,      // season, as 1-based
       episode: int      // episode, as 1-based
