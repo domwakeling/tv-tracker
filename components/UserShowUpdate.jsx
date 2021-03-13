@@ -4,6 +4,8 @@
 /* eslint-disable no-extra-parens */
 import * as constants from '../lib/constants';
 import { useEffect, useState } from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import ContentLoading from './ContentLoading.jsx';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -50,52 +52,54 @@ const UserShowUpdate = ({ episodes, lastSeen }) => {
     };
 
     return (
-        <>
-            { episodes.length === constants.ZERO && <ContentLoading />}
-            { episodes.length > constants.ZERO &&
-                <>
-                    <Typography>
-                        Current Pick: S{currentPick.season} E{currentPick.episode}
-                    </Typography>
-                    <FormControl>
-                        <InputLabel>Season</InputLabel>
-                        <Select
-                            id="demo-simple-select"
-                            labelId="select-season"
-                            onChange={handleSeasonPick}
-                            value={currentPick.season}
-                        >
-                            { episodes.map((season, idx) => (
-                                <MenuItem
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={`season${idx}`}
-                                    value={idx + constants.ONE}
-                                >
-                                    {idx + constants.ONE}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel>Episode</InputLabel>
-                        <Select
-                            id="demo-simple-select"
-                            labelId="select-episode"
-                            onChange={handleEpisodePick}
-                            value={currentPick.episode}
-                        >
-                            { arrayOfEpisodes(currentPick.season).map((episode) => (
-                                <MenuItem
-                                    key={`episode${episode}`}
-                                    value={episode}
-                                >
-                                    {episode}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </> }
-        </>
+        <Card raised>
+            <CardContent>
+                { episodes.length === constants.ZERO && <ContentLoading />}
+                { episodes.length > constants.ZERO &&
+                    <>
+                        <Typography>
+                            Current Pick: S{currentPick.season} E{currentPick.episode}
+                        </Typography>
+                        <FormControl>
+                            <InputLabel>Season</InputLabel>
+                            <Select
+                                id="demo-simple-select"
+                                labelId="select-season"
+                                onChange={handleSeasonPick}
+                                value={currentPick.season}
+                            >
+                                { episodes.map((season, idx) => (
+                                    <MenuItem
+                                        // eslint-disable-next-line react/no-array-index-key
+                                        key={`season${idx}`}
+                                        value={idx + constants.ONE}
+                                    >
+                                        {idx + constants.ONE}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel>Episode</InputLabel>
+                            <Select
+                                id="demo-simple-select"
+                                labelId="select-episode"
+                                onChange={handleEpisodePick}
+                                value={currentPick.episode}
+                            >
+                                { arrayOfEpisodes(currentPick.season).map((episode) => (
+                                    <MenuItem
+                                        key={`episode${episode}`}
+                                        value={episode}
+                                    >
+                                        {episode}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </> }
+            </CardContent>
+        </Card>
     );
 };
 

@@ -141,9 +141,12 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
                     >
                         <Grid
                             item
-                            sm={4}
+                            md={4}
+                            sm={6}
+                            xs={12}
                         >
                             <UserShowEpisode
+                                cardTitle="Last Watched"
                                 episode={lastSeen}
                                 title={showTitle(lastSeen)}
                                 unWatched={noneWatched()}
@@ -151,10 +154,13 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
                         </Grid>
                         <Grid
                             item
-                            sm={4}
+                            md={4}
+                            sm={6}
+                            xs={12}
                         >
                             <UserShowEpisode
                                 allSeen={allWatched()}
+                                cardTitle="Up Next"
                                 episode={activeShow.episodes
                                     ? nextEpisode()
                                     : {}}
@@ -163,7 +169,8 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
                         </Grid>
                         <Grid
                             item
-                            sm={4}
+                            md={4}
+                            xs={12}
                         >
                             <UserShowUpdate
                                 episodes={activeShow.episodes || []}

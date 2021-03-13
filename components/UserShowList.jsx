@@ -39,7 +39,6 @@ const UserShowList = ({ userId, userShows }) => {
                         item
                         key={show._id}
                         md={3}
-                        sm={4}
                         xs={6}
                     >
                         <UserShowCard
