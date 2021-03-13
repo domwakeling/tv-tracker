@@ -1,110 +1,110 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-statements */
 /* eslint-disable no-extra-parens */
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import * as constants from '../lib/constants';
+import { useEffect, useState } from 'react';
 import ContentLoading from './ContentLoading.jsx';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
+import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
-import { mutate } from 'swr';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useSession } from 'next-auth/client';
-import { useState } from 'react';
 
-const SearchShowCard = (props) => {
-    const { id, imageUrl, modalCloseHandler, title, userHas, userId } = props;
-    const [session] = useSession();
-    const [updating, setUpdating] = useState(false);
-    const matches = useMediaQuery('(max-width:959px)');
+const UserShowUpdate = ({ episodes, lastSeen }) => {
+    const [currentPick, setCurrentPick] = useState({
+        episode: 0,
+        season: 0
+    });
 
-    const addShow = async () => {
-        setUpdating(true);
-        try {
-            // Get show (or null) from Mongodb
-            let res = await axios(`/api/shows/getshowfromdb/${id}`);
-            let { show } = res.data;
+    useEffect(() => {
+        setCurrentPick({
+            episode: lastSeen.episode,
+            season: lastSeen.season
+        });
+    }, [lastSeen]);
 
-            if (show === null) {
-                // Show isn't already stored, so get details from OMDB
-                res = await axios(`api/shows/getshowinfo/${id}`);
-                // eslint-disable-next-line prefer-destructuring
-                show = res.data;
+    const handleSeasonPick = (ev) => {
+        ev.preventDefault();
+        setCurrentPick({
+            episode: 0,
+            season: ev.target.value });
+    };
 
-                // Store data in Mongodb
-                res = await axios.post('api/shows/saveshowtodb', { show });
-                show = res.data;
-            }
+    const handleEpisodePick = (ev) => {
+        ev.preventDefault();
+        setCurrentPick({
+            episode: ev.target.value,
+            season: currentPick.season
+        });
+    };
 
-            // Send the user's _id and show details to 'addshow'
-            res = await axios.post('api/user/addshow', {
-                _id: userId,
-                show
-            });
-
-            mutate(`api/user/accesstoken/${session.accessToken}`);
-            setUpdating(false);
-            // eslint-disable-next-line no-empty-function
-            modalCloseHandler({ preventDefault: () => { } });
-
-        } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log('err: ', err.message);
-            setUpdating(false);
+    // Get list of episodes numbers in an array - USES ONE-BASED SEASON NUMBERING
+    const arrayOfEpisodes = (season) => {
+        const ret = [];
+        for (let idx = 1; idx <= episodes[season - constants.ONE]; idx += constants.ONE) {
+            ret.push(idx);
         }
+        return ret;
     };
 
     return (
-        <Card raised>
-            <CardMedia
-                component="img"
-                height={matches
-                    ? '450'
-                    : '350'}
-                image={imageUrl || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
-                title={title}
-            />
-            <CardContent>
-                <Typography
-                    color="textSecondary"
-                    component="p"
-                    noWrap
-                    variant="subtitle1"
-                >
-                    {title}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button
-                    color="secondary"
-                    disabled={userHas}
-                    onClick={addShow}
-                    variant="contained"
-                >
-                    Add show
-                </Button>
-                <Box flexGrow="1" />
-                {updating && <ContentLoading />}
-            </CardActions>
-        </Card>
+        <>
+            { episodes.length === constants.ZERO && <ContentLoading />}
+            { episodes.length > constants.ZERO &&
+                <>
+                    <Typography>
+                        Current Pick: S{currentPick.season} E{currentPick.episode}
+                    </Typography>
+                    <FormControl>
+                        <InputLabel>Season</InputLabel>
+                        <Select
+                            id="demo-simple-select"
+                            labelId="select-season"
+                            onChange={handleSeasonPick}
+                            value={currentPick.season}
+                        >
+                            { episodes.map((season, idx) => (
+                                <MenuItem
+                                    // eslint-disable-next-line react/no-array-index-key
+                                    key={`season${idx}`}
+                                    value={idx + constants.ONE}
+                                >
+                                    {idx + constants.ONE}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel>Episode</InputLabel>
+                        <Select
+                            id="demo-simple-select"
+                            labelId="select-episode"
+                            onChange={handleEpisodePick}
+                            value={currentPick.episode}
+                        >
+                            { arrayOfEpisodes(currentPick.season).map((episode) => (
+                                <MenuItem
+                                    key={`episode${episode}`}
+                                    value={episode}
+                                >
+                                    {episode}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </> }
+        </>
     );
 };
 
-SearchShowCard.propTypes = {
-    id: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string,
-    modalCloseHandler: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
-    userHas: PropTypes.bool.isRequired,
-    userId: PropTypes.string.isRequired
+UserShowUpdate.propTypes = {
+    episodes: PropTypes.arrayOf(PropTypes.number).isRequired,
+    lastSeen: PropTypes.shape({
+        episode: PropTypes.number,
+        season: PropTypes.number
+    }).isRequired
 };
 
-SearchShowCard.defaultProps = {
-    imageUrl: null
-};
-
-export default SearchShowCard;
+export default UserShowUpdate;

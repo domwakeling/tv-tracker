@@ -13,6 +13,7 @@ import MyModal from './MyModal.jsx';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import UserShowEpisode from './UserShowEpisode.jsx';
+import UserShowUpdate from './UserShowUpdate.jsx';
 import axios from 'axios';
 
 const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userShows }) => {
@@ -133,25 +134,40 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
                         </IconButton>
                     </Box>
                     <hr />
-                    {/* Grid container for the shows info list */}
+                    {/* Grid container */}
                     <Grid
                         container
                         spacing={2}
                     >
-                        <Grid item>
+                        <Grid
+                            item
+                            sm={4}
+                        >
                             <UserShowEpisode
                                 episode={lastSeen}
                                 title={showTitle(lastSeen)}
                                 unWatched={noneWatched()}
                             />
                         </Grid>
-                        <Grid item>
+                        <Grid
+                            item
+                            sm={4}
+                        >
                             <UserShowEpisode
                                 allSeen={allWatched()}
                                 episode={activeShow.episodes
                                     ? nextEpisode()
                                     : {}}
                                 title={showTitle(nextEpisode())}
+                            />
+                        </Grid>
+                        <Grid
+                            item
+                            sm={4}
+                        >
+                            <UserShowUpdate
+                                episodes={activeShow.episodes || []}
+                                lastSeen={lastSeen}
                             />
                         </Grid>
                     </Grid>
