@@ -53,9 +53,12 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
     );
 
     const allWatched = () => (
-        activeShow.episodes &&
-        lastSeen.season >= activeShow.episodes.length &&
-        lastSeen.episode >= activeShow.episodes[activeShow.episodes.length - constants.ONE]
+        activeShow.episodes && (
+            lastSeen.season >= activeShow.episodes.length || (
+                lastSeen.season === activeShow.episodes.length &&
+                lastSeen.episode >= activeShow.episodes[activeShow.episodes.length - constants.ONE]
+            )
+        )
     );
 
     const showTitle = (episode) => {
@@ -69,6 +72,9 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
             return '...';
         }
         if (allWatched()) {
+            return '';
+        }
+        if (episode.season > activeShowDetail.seasonsInfo.length) {
             return '';
         }
         // Dealt with all edge cases (almost: wont catch error of episode > season length and NOT last season), now get the title
