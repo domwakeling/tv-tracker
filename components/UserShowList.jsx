@@ -6,7 +6,7 @@ import UserShowCard from './UserShowCard.jsx';
 import UserShowModal from './UserShowModal.jsx';
 import { useState } from 'react';
 
-const UserShowList = ({ userId, userShows }) => {
+const UserShowList = ({ accessToken, userId, userShows }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalShowId, setModalShowId] = useState(null);
 
@@ -48,6 +48,7 @@ const UserShowList = ({ userId, userShows }) => {
                     </Grid>
                 ))}
             <UserShowModal
+                accessToken={accessToken}
                 modalShowId={modalShowId}
                 onCloseHandler={handleModalClose}
                 openState={modalOpen}
@@ -59,6 +60,7 @@ const UserShowList = ({ userId, userShows }) => {
 };
 
 UserShowList.propTypes = {
+    accessToken: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
     userShows: PropTypes.arrayOf(PropTypes.shape()).isRequired
 };

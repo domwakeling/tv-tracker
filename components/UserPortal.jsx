@@ -64,6 +64,7 @@ const UserPortal = () => {
                         userShows={user.showIds}
                     />
                     <UserShowList
+                        accessToken={session.accessToken}
                         userId={user._id}
                         userShows={user.shows}
                     />

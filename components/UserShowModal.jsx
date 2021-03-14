@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable no-extra-parens */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-statements */
@@ -15,8 +16,9 @@ import Typography from '@material-ui/core/Typography';
 import UserShowEpisode from './UserShowEpisode.jsx';
 import UserShowUpdate from './UserShowUpdate.jsx';
 import axios from 'axios';
+import { mutate } from 'swr';
 
-const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userShows }) => {
+const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, userId, userShows }) => {
     const [lastSeen, setLastSeen] = useState({});
     const [activeShow, setActiveShow] = useState({});
     const [activeShowDetail, setActiveShowDetail] = useState({});
@@ -101,6 +103,20 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
         return nextEp;
     };
 
+    const updateHandler = async (ev) => {
+        ev.preventDefault();
+        const updateBody = {
+            lastSeen,
+            showId: modalShowId,
+            userId
+        };
+        const res = await axios.post('/api/user/updateshow/', updateBody);
+        if (res.status === constants.RESPONSE_OK) {
+            mutate(`api/user/accesstoken/${accessToken}`);
+        }
+        modalCloseHandler({ preventDefault: () => {} });
+    };
+
     return (
         <MyModal
             ariaD="add-show-modal"
@@ -170,11 +186,13 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
                         <Grid
                             item
                             md={4}
+                            sm={6}
                             xs={12}
                         >
                             <UserShowUpdate
                                 episodes={activeShow.episodes || []}
                                 lastSeen={lastSeen}
+                                setLastSeen={setLastSeen}
                             />
                         </Grid>
                     </Grid>
@@ -184,6 +202,7 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
                     >
                         <Button
                             color="secondary"
+                            onClick={updateHandler}
                             variant="contained"
                         >
                             Udpate
@@ -202,6 +221,7 @@ const UserShowModal = ({ modalShowId, onCloseHandler, openState, userId, userSho
 };
 
 UserShowModal.propTypes = {
+    accessToken: PropTypes.string.isRequired,
     modalShowId: PropTypes.string,
     onCloseHandler: PropTypes.func.isRequired,
     openState: PropTypes.bool.isRequired,

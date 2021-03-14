@@ -20,36 +20,44 @@ const UserShowEpisode = ({ allSeen, cardTitle, episode, title, unWatched }) => (
                 </Typography>
                 { episode.episode !== constants.ZERO && !allSeen && !unWatched &&
                     <Typography
-                        color="textSecondary"
-                        component="p"
                         noWrap
-                        variant="subtitle1"
+                        variant="body1"
                     >
                         S{episode.season} E{episode.episode}
                     </Typography> }
                 { allSeen &&
-                    <Typography
-                        color="textSecondary"
-                        component="p"
-                        noWrap
-                        variant="subtitle1"
-                    >
-                        No more episodes
-                    </Typography> }
+                    <>
+                        <Typography
+                            color="textSecondary"
+                            noWrap
+                            variant="body1"
+                        >
+                            No more episodes
+                        </Typography>
+                        <Typography
+                            variant="body2"
+                        >
+                            &nbsp;
+                        </Typography>
+                    </> }
                 { unWatched &&
-                    <Typography
-                        color="textSecondary"
-                        component="p"
-                        noWrap
-                        variant="subtitle1"
-                    >
-                        Let{'\''}s get started!
-                    </Typography> }
+                    <>
+                        <Typography
+                            noWrap
+                            variant="body1"
+                        >
+                            Let{'\''}s get started!
+                        </Typography>
+                        <Typography
+                            noWrap
+                            variant="body2"
+                        >
+                            &nbsp;
+                        </Typography>
+                    </> }
                 <Typography
-                    color="textSecondary"
-                    component="p"
                     noWrap
-                    variant="subtitle1"
+                    variant="body2"
                 >
                     {title}
                 </Typography>

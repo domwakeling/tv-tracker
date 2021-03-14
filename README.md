@@ -112,6 +112,7 @@ See `/data/dummySeasonInfo.js` for an example of the data that is held within th
 | `api/user/` | |
 | ` .../accesstoken/[accesstoken]` | Uses session `accessToken` to get the user from Mongodb<sup>4</sup> |
 | ` .../addshow` | Adds a show to a user in Mongodb Shows database |
+| ` .../updateshow` | Updates show for a user in Mongodb Shows database |
 
 **Footnotes**
 1. In the form `{ show: {show-object} }`, or `{ show: null }` if not in the Mongodb
