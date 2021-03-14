@@ -1,3 +1,4 @@
+/* eslint-disable multiline-comment-style */
 /* eslint-disable no-empty-function */
 /* eslint-disable no-extra-parens */
 /* eslint-disable no-underscore-dangle */
@@ -54,7 +55,7 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
 
     const allWatched = () => (
         activeShow.episodes && (
-            lastSeen.season >= activeShow.episodes.length || (
+            lastSeen.season > activeShow.episodes.length || (
                 lastSeen.season === activeShow.episodes.length &&
                 lastSeen.episode >= activeShow.episodes[activeShow.episodes.length - constants.ONE]
             )
@@ -71,19 +72,23 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
         if (!activeShowDetail || !activeShowDetail.seasonsInfo) {
             return '...';
         }
-        if (allWatched()) {
-            return '';
-        }
         if (episode.season > activeShowDetail.seasonsInfo.length) {
             return '';
         }
         // Dealt with all edge cases (almost: wont catch error of episode > season length and NOT last season), now get the title
-        return activeShowDetail.
-            seasonsInfo.
-            filter((season) => parseInt(season.Season, constants.DEC) === episode.season)[constants.ZERO].
-            Episodes.
-            filter((ep) => parseInt(ep.Episode, constants.DEC) === episode.episode)[constants.ZERO].
-            Title;
+        /* Get some weird edge-cases with unreleased seasons, where not all the episodes have been
+         * added to the database yet ...
+         */
+        try {
+            return activeShowDetail.
+                seasonsInfo.
+                filter((season) => parseInt(season.Season, constants.DEC) === episode.season)[constants.ZERO].
+                Episodes.
+                filter((ep) => parseInt(ep.Episode, constants.DEC) === episode.episode)[constants.ZERO].
+                Title;
+        } catch {
+            return '';
+        }
     };
 
     const nextEpisode = () => {
@@ -102,7 +107,7 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
             return nextEp;
         }
         // Dealt with edge cases, now make "next episode" and check that's not a new season
-        if (activeShow.episodes[nextEp.season - constants.ONE] === nextEp.episode) {
+        if (activeShow.episodes[nextEp.season - constants.ONE] < nextEp.episode) {
             nextEp.episode = constants.ONE;
             nextEp.season += constants.ONE;
         }
