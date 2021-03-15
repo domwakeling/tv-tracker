@@ -15,6 +15,7 @@ import MyModal from './MyModal.jsx';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import UserShowEpisode from './UserShowEpisode.jsx';
+import UserShowRemoveDialog from './UserShowRemoveDialog.jsx';
 import UserShowUpdate from './UserShowUpdate.jsx';
 import axios from 'axios';
 import { mutate } from 'swr';
@@ -23,6 +24,7 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
     const [lastSeen, setLastSeen] = useState({});
     const [activeShow, setActiveShow] = useState({});
     const [activeShowDetail, setActiveShowDetail] = useState({});
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const getActiveShowDetail = async () => {
         const res = await axios(`/api/shows/getshowfromdb/${modalShowId}`);
@@ -47,6 +49,29 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
         event.preventDefault();
         setLastSeen({});
         onCloseHandler();
+    };
+
+    const dialogCloseHandler = (event) => {
+        event.preventDefault();
+        setDialogOpen(false);
+    };
+
+    const dialogConfirmHandler = async (ev) => {
+        ev.preventDefault();
+        const updateBody = {
+            showId: modalShowId,
+            userId
+        };
+        const res = await axios.post('/api/user/removeshow/', updateBody);
+        if (res.status === constants.RESPONSE_OK) {
+            mutate(`api/user/accesstoken/${accessToken}`);
+        }
+        dialogCloseHandler({ preventDefault: () => { } });
+        modalCloseHandler({ preventDefault: () => { } });
+    };
+
+    const dialogOpenHandler = () => {
+        setDialogOpen(true);
     };
 
     const noneWatched = () => (
@@ -221,11 +246,17 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
                         <Box flexGrow="1" />
                         <Button
                             color="primary"
+                            onClick={dialogOpenHandler}
                             variant="contained"
                         >
-                            Remove from my shows
+                            Remove
                         </Button>
                     </Box>
+                    <UserShowRemoveDialog
+                        dialogCloseHandler={dialogCloseHandler}
+                        dialogConfirmHandler={dialogConfirmHandler}
+                        dialogOpen={dialogOpen}
+                    />
                 </Box> }
         </MyModal>
     );

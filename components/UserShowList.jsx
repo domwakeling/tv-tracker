@@ -1,9 +1,11 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-extra-parens */
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import UserShowCard from './UserShowCard.jsx';
 import UserShowModal from './UserShowModal.jsx';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useState } from 'react';
 
 const UserShowList = ({ accessToken, userId, userShows }) => {
@@ -25,6 +27,9 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
         handleModalOpen();
     };
 
+    const matches = useMediaQuery('(max-width:760px)');
+    const matchesLarge = useMediaQuery('(min-width:1280px)');
+
     return (
         <Grid
             alignItems="stretch"
@@ -38,11 +43,22 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
                         display="flex"
                         item
                         key={show._id}
+                        lg={2}
                         md={3}
+                        sm={4}
                         xs={6}
                     >
                         <UserShowCard
                             clickHandler={showClickHandler}
+                            heightPref={
+                                matchesLarge
+                                    ? '280px'
+                                    : (
+                                        matches
+                                            ? '350px'
+                                            : '400px'
+                                    )
+                            }
                             show={show}
                         />
                     </Grid>

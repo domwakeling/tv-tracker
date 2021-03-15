@@ -63,10 +63,37 @@ const UserPortal = () => {
                         userId={user._id}
                         userShows={user.showIds}
                     />
+                    <Typography
+                        component="p"
+                        gutterBottom
+                        variant="h5"
+                    >
+                        Currently Watching
+                    </Typography>
                     <UserShowList
                         accessToken={session.accessToken}
                         userId={user._id}
-                        userShows={user.shows}
+                        userShows={user.shows.filter((show) => (
+                            show.lastEpisode.season !== show.episodes.length ||
+                            show.lastEpisode.episode !== show.episodes[show.episodes.length - constants.ONE]
+                        ))}
+                    />
+                    <br />
+                    <hr />
+                    <Typography
+                        component="p"
+                        gutterBottom
+                        variant="h5"
+                    >
+                        Watched
+                    </Typography>
+                    <UserShowList
+                        accessToken={session.accessToken}
+                        userId={user._id}
+                        userShows={user.shows.filter((show) => (
+                            show.lastEpisode.season === show.episodes.length &&
+                            show.lastEpisode.episode === show.episodes[show.episodes.length - constants.ONE]
+                        ))}
                     />
                 </> }
             {/* If there's an error, show it */}

@@ -6,11 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const UserShowCard = (props) => {
-    const { clickHandler, show } = props;
-    const matches = useMediaQuery('(max-width:959px)');
+const UserShowCard = ({ clickHandler, heightPref, show }) => {
 
     const cardClickHandler = (ev) => {
         clickHandler(ev, show._id);
@@ -24,9 +21,7 @@ const UserShowCard = (props) => {
             >
                 <CardMedia
                     component="img"
-                    height={matches
-                        ? '450'
-                        : '350'}
+                    height={heightPref}
                     image={show.imageUrl || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'}
                     title={show.title}
                 />
@@ -47,6 +42,7 @@ const UserShowCard = (props) => {
 
 UserShowCard.propTypes = {
     clickHandler: PropTypes.func.isRequired,
+    heightPref: PropTypes.string.isRequired,
     show: PropTypes.shape().isRequired
 };
 
