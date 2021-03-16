@@ -27,9 +27,7 @@ const handler = async (req, res) => {
             }
         };
 
-        // The UI is expected to prevent a show from being added twice ...
-
-        // Add show to user
+        // Remove show from user
         const ret = await users.updateOne(query, updateDocument);
         if (ret.modifiedCount === constants.ONE) {
             res.status(constants.RESPONSE_OK).json({ message: 'success' });

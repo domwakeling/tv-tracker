@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import ContentLoading from './ContentLoading.jsx';
 import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
@@ -57,77 +58,84 @@ const UserShowUpdate = ({ episodes, lastSeen, setLastSeen }) => {
     };
 
     return (
-        <Card raised>
-            <Box minHeight="130px">
-                <CardContent>
-                    { episodes.length === constants.ZERO && <ContentLoading />}
-                    { episodes.length > constants.ZERO &&
-                        <>
-                            <Typography
-                                component="p"
-                                variant="h6"
-                            >
-                                Update Last Watched
-                            </Typography>
-                            <Box
-                                display="flex"
-                                mt={1}
-                            >
-                                <FormControl color="secondary">
-                                    <div style={{ width: '80px' }}>
-                                        <InputLabel>Season</InputLabel>
-                                        <Select
-                                            fullWidth
-                                            id="demo-simple-select"
-                                            labelId="select-season"
-                                            onChange={handleSeasonPick}
-                                            value={currentPick.season === constants.ZERO
-                                                ? ''
-                                                : currentPick.season}
-                                            width="10rem"
-                                        >
-                                            { episodes.map((season, idx) => (
-                                                <MenuItem
-                                                    // eslint-disable-next-line react/no-array-index-key
-                                                    key={`season${idx}`}
-                                                    value={idx + constants.ONE}
-                                                >
-                                                    {idx + constants.ONE}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </div>
-                                </FormControl>
-                                <div style={{ width: '15px' }} />
-                                <FormControl color="secondary">
-                                    <div style={{ width: '80px' }}>
-                                        <InputLabel>Episode</InputLabel>
-                                        <Select
-                                            disabled={currentPick.season === constants.ZERO}
-                                            fullWidth
-                                            id="demo-simple-select"
-                                            labelId="select-episode"
-                                            onChange={handleEpisodePick}
-                                            value={currentPick.episode === constants.ZERO
-                                                ? ''
-                                                : currentPick.episode}
-                                        >
-                                            { arrayOfEpisodes(currentPick.season).map((episode) => (
-                                                <MenuItem
-                                                    key={`episode${episode}`}
-                                                    value={episode}
-                                                >
-                                                    {episode}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </div>
-                                </FormControl>
-                            </Box>
-                        </> }
-                </CardContent>
-            </Box>
-        </Card>
+        <Grid
+            item
+            md={4}
+            xs={12}
+        >
+            <Card raised>
+                <Box minHeight="130px">
+                    <CardContent>
+                        { episodes.length === constants.ZERO && <ContentLoading />}
+                        { episodes.length > constants.ZERO &&
+                            <>
+                                <Typography
+                                    component="p"
+                                    variant="h6"
+                                >
+                                    Update Last Watched
+                                </Typography>
+                                <Box
+                                    display="flex"
+                                    mt={1}
+                                >
+                                    <FormControl color="secondary">
+                                        <div style={{ width: '80px' }}>
+                                            <InputLabel>Season</InputLabel>
+                                            <Select
+                                                fullWidth
+                                                id="demo-simple-select"
+                                                labelId="select-season"
+                                                onChange={handleSeasonPick}
+                                                value={currentPick.season === constants.ZERO
+                                                    ? ''
+                                                    : currentPick.season}
+                                                width="10rem"
+                                            >
+                                                { episodes.map((season, idx) => (
+                                                    <MenuItem
+                                                        // eslint-disable-next-line react/no-array-index-key
+                                                        key={`season${idx}`}
+                                                        value={idx + constants.ONE}
+                                                    >
+                                                        {idx + constants.ONE}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </div>
+                                    </FormControl>
+                                    <div style={{ width: '15px' }} />
+                                    <FormControl color="secondary">
+                                        <div style={{ width: '80px' }}>
+                                            <InputLabel>Episode</InputLabel>
+                                            <Select
+                                                disabled={currentPick.season === constants.ZERO}
+                                                fullWidth
+                                                id="demo-simple-select"
+                                                labelId="select-episode"
+                                                onChange={handleEpisodePick}
+                                                value={currentPick.episode === constants.ZERO
+                                                    ? ''
+                                                    : currentPick.episode}
+                                            >
+                                                { arrayOfEpisodes(currentPick.season).
+                                                    map((episode) => (
+                                                        <MenuItem
+                                                            key={`episode${episode}`}
+                                                            value={episode}
+                                                        >
+                                                            {episode}
+                                                        </MenuItem>
+                                                    ))}
+                                            </Select>
+                                        </div>
+                                    </FormControl>
+                                </Box>
+                            </> }
+                    </CardContent>
+                </Box>
+            </Card>
+        </Grid>
     );
 };
 

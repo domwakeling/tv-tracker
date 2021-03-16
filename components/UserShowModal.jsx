@@ -20,11 +20,12 @@ import UserShowUpdate from './UserShowUpdate.jsx';
 import axios from 'axios';
 import { mutate } from 'swr';
 
-const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, userId, userShows }) => {
+const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHandler, openState, userId, userShows }) => {
     const [lastSeen, setLastSeen] = useState({});
     const [activeShow, setActiveShow] = useState({});
     const [activeShowDetail, setActiveShowDetail] = useState({});
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [spinning, setSpinning] = useState(false);
 
     const getActiveShowDetail = async () => {
         const res = await axios(`/api/shows/getshowfromdb/${modalShowId}`);
@@ -49,6 +50,7 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
         event.preventDefault();
         setLastSeen({});
         onCloseHandler();
+        setSpinning(false);
     };
 
     const dialogCloseHandler = (event) => {
@@ -141,6 +143,7 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
 
     const updateHandler = async (ev) => {
         ev.preventDefault();
+        setSpinning(true);
         const updateBody = {
             lastSeen,
             showId: modalShowId,
@@ -191,66 +194,55 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
                         container
                         spacing={2}
                     >
-                        <Grid
-                            item
-                            md={4}
-                            sm={6}
-                            xs={12}
-                        >
-                            <UserShowEpisode
-                                cardTitle="Last Watched"
-                                episode={lastSeen}
-                                title={showTitle(lastSeen)}
-                                unWatched={noneWatched()}
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={4}
-                            sm={6}
-                            xs={12}
-                        >
-                            <UserShowEpisode
-                                allSeen={allWatched()}
-                                cardTitle="Up Next"
-                                episode={activeShow.episodes
-                                    ? nextEpisode()
-                                    : {}}
-                                title={showTitle(nextEpisode())}
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={4}
-                            sm={6}
-                            xs={12}
-                        >
-                            <UserShowUpdate
-                                episodes={activeShow.episodes || []}
-                                lastSeen={lastSeen}
-                                setLastSeen={setLastSeen}
-                            />
-                        </Grid>
+                        <UserShowEpisode
+                            cardTitle="Last Watched"
+                            episode={lastSeen}
+                            heightPref={episodeHeightPref}
+                            title={showTitle(lastSeen)}
+                            unWatched={noneWatched()}
+                        />
+                        <UserShowEpisode
+                            allSeen={allWatched()}
+                            cardTitle="Up Next"
+                            episode={activeShow.episodes
+                                ? nextEpisode()
+                                : {}}
+                            heightPref={episodeHeightPref}
+                            title={showTitle(nextEpisode())}
+                        />
+                        <UserShowUpdate
+                            episodes={activeShow.episodes || []}
+                            lastSeen={lastSeen}
+                            setLastSeen={setLastSeen}
+                        />
                     </Grid>
                     <Box
                         display="flex"
                         pt={2}
                     >
-                        <Button
-                            color="secondary"
-                            onClick={updateHandler}
-                            variant="contained"
-                        >
-                            Udpate
-                        </Button>
+                        <Box pb={1}>
+                            <Button
+                                color="secondary"
+                                onClick={updateHandler}
+                                variant="contained"
+                            >
+                                Udpate
+                            </Button>
+                        </Box>
+                        { spinning &&
+                            <Box ml={1}>
+                                <ContentLoading />
+                            </Box> }
                         <Box flexGrow="1" />
-                        <Button
-                            color="primary"
-                            onClick={dialogOpenHandler}
-                            variant="contained"
-                        >
-                            Remove
-                        </Button>
+                        <Box pb={1}>
+                            <Button
+                                color="primary"
+                                onClick={dialogOpenHandler}
+                                variant="contained"
+                            >
+                                Remove
+                            </Button>
+                        </Box>
                     </Box>
                     <UserShowRemoveDialog
                         dialogCloseHandler={dialogCloseHandler}
@@ -264,6 +256,7 @@ const UserShowModal = ({ accessToken, modalShowId, onCloseHandler, openState, us
 
 UserShowModal.propTypes = {
     accessToken: PropTypes.string.isRequired,
+    episodeHeightPref: PropTypes.string.isRequired,
     modalShowId: PropTypes.string,
     onCloseHandler: PropTypes.func.isRequired,
     openState: PropTypes.bool.isRequired,

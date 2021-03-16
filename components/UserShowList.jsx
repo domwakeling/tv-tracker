@@ -27,7 +27,7 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
         handleModalOpen();
     };
 
-    const matches = useMediaQuery('(max-width:760px)');
+    const matchesSmall = useMediaQuery('(max-width:760px)');
     const matchesLarge = useMediaQuery('(min-width:1280px)');
 
     return (
@@ -54,7 +54,7 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
                                 matchesLarge
                                     ? '280px'
                                     : (
-                                        matches
+                                        matchesSmall
                                             ? '350px'
                                             : '400px'
                                     )
@@ -65,6 +65,11 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
                 ))}
             <UserShowModal
                 accessToken={accessToken}
+                episodeHeightPref={
+                    matchesSmall
+                        ? '10px'
+                        : '130px'
+                }
                 modalShowId={modalShowId}
                 onCloseHandler={handleModalClose}
                 openState={modalOpen}
