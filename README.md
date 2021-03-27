@@ -92,11 +92,12 @@ seasonsInfo: {
 },
 showInfo: {
   ...                   // information on the overall show
-}
+},
+showOver: boolean       // optional; if set to true, app will never check for updates
 ```
 
 See `/data/dummySeasonInfo.js` for an example of the data that is held within the `seasonsInfo`  and
-`shownfo` dictionaries.
+`showInfo` dictionaries.
 
 ## Summary of API routes
 
@@ -105,17 +106,21 @@ See `/data/dummySeasonInfo.js` for an example of the data that is held within th
 | `api/auth/` | |
 | ` .../[...nextauth]` | Used by `nextauth.js` package |
 | `api/shows/` | |
-| ` .../getshowfromdb/[imdbid]` | Retrieves show info from Mongodb<sup>1</sup> |
-| ` .../getshowinfo/[imdbid]` | Retrieves show info from OMDB<sup>2</sup> |
+| ` .../checkshowinfo/[imdbid]` | Checks Mongodb matches show info from OMDB <sup>1</sup>|
+| ` .../getshowfromdb/[imdbid]` | Retrieves show info from Mongodb<sup>2</sup> |
+| ` .../getshowinfo/[imdbid]` | Retrieves show info from OMDB<sup>3</sup> |
 | ` .../saveshowtodb` | Save a show into Mongodb Shows database |
-| ` ...search/[searchterm]` | Retrieves a search from OMDB<sup>3</sup> |
+| ` ...search/[searchterm]` | Retrieves a search from OMDB<sup>4</sup> |
 | `api/user/` | |
-| ` .../accesstoken/[accesstoken]` | Uses session `accessToken` to get the user from Mongodb<sup>4</sup> |
+| ` .../accesstoken/[accesstoken]` | Uses session `accessToken` to get the user from Mongodb<sup>5</sup> |
 | ` .../addshow` | Adds a show to a user in Mongodb Shows database |
+| ` .../removeshow` | Removes show from a user in Mongodb Shows database |
 | ` .../updateshow` | Updates show for a user in Mongodb Shows database |
 
 **Footnotes**
-1. In the form `{ show: {show-object} }`, or `{ show: null }` if not in the Mongodb
-2. See `data/dummyShowInfo.js` for an example
-3. Limited to ten results, see `data/dummsySearchinfo.js` from an example
-4. Looks up `accessToken` in the Auth database, gets user _id, looks that up in the Shows database
+1. If Mongodb doesn't match OMDB, (i) updates Mongodb's **shows** collection and then updates all
+matching items in **users** collection &mdash; this is effectively to deal with new seasons
+2. In the form `{ show: {show-object} }`, or `{ show: null }` if not in the Mongodb
+3. See `data/dummyShowInfo.js` for an example
+4. Limited to ten results, see `data/dummsySearchinfo.js` from an example
+5. Looks up `accessToken` in the Auth database, gets user _id, looks that up in the Shows database
