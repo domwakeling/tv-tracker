@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-extra-parens */
@@ -27,7 +28,10 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
         handleModalOpen();
     };
 
-    const matchesPhoneSize = useMediaQuery('(max-width: 600px');
+    const matchesPhoneSize = useMediaQuery('(max-width:600px)');
+    const matchesiPhone = useMediaQuery('(max-width:700px) and (-webkit-min-device-pixel-ratio: 2)');
+    const matchesXLiPhone = useMediaQuery('(max-width:850px) and (-webkit-min-device-pixel-ratio: 3)');
+
     const matchesSmall = useMediaQuery('(max-width:760px)');
     const matchesLarge = useMediaQuery('(min-width:1280px)');
 
@@ -55,8 +59,8 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
                                 matchesLarge
                                     ? '280px'
                                     : (
-                                        matchesPhoneSize
-                                            ? '20px'
+                                        (matchesPhoneSize || matchesiPhone || matchesXLiPhone)
+                                            ? '250px'
                                             : (
                                                 matchesSmall
                                                     ? '350px'
