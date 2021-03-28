@@ -27,6 +27,7 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
         handleModalOpen();
     };
 
+    const matchesPhoneSize = useMediaQuery('(max-width: 600px');
     const matchesSmall = useMediaQuery('(max-width:760px)');
     const matchesLarge = useMediaQuery('(min-width:1280px)');
 
@@ -54,9 +55,13 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
                                 matchesLarge
                                     ? '280px'
                                     : (
-                                        matchesSmall
-                                            ? '350px'
-                                            : '400px'
+                                        matchesPhoneSize
+                                            ? '250px'
+                                            : (
+                                                matchesSmall
+                                                    ? '350px'
+                                                    : '400px'
+                                            )
                                     )
                             }
                             show={show}
