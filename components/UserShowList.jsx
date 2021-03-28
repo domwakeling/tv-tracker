@@ -56,7 +56,7 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
                                     ? '280px'
                                     : (
                                         matchesPhoneSize
-                                            ? '250px'
+                                            ? '20px'
                                             : (
                                                 matchesSmall
                                                     ? '350px'
