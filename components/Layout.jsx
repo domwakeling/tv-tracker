@@ -4,9 +4,9 @@ import Container from '@material-ui/core/Container';
 import Header from '../components/Header.jsx';
 import PropTypes from 'prop-types';
 
-const Layout = ({ children }) => (
+const Layout = ({ children, user }) => (
     <>
-        <Header />
+        <Header user={user} />
         <Container>
             <Box mt={3}>
                 <main>{children}</main>
@@ -17,7 +17,8 @@ const Layout = ({ children }) => (
 
 Layout.propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    children: PropTypes.array.isRequired
+    children: PropTypes.array.isRequired,
+    user: PropTypes.shape().isRequired
 };
 
 export default Layout;

@@ -61,6 +61,9 @@ Structure for the users collection is:
 
 ```
 _id: ObjectId,          // assigned in NextAuth and replicated in the shows db
+roles: {                // object of key-value pairs ...
+  [rolename]: bool      // ... being "rolename" and boolean
+},
 shows: [                // array of objects representing each show the user has selected
   {
     _id: string,        // the imdbId for the show

@@ -8,7 +8,6 @@ import useUser from '../lib/hooks/useUser';
 
 const SWRTestUser = () => {
     const [session] = useSession();
-    // eslint-disable-next-line no-underscore-dangle
     const { user, isLoading, isError } = useUser((session && session.accessToken) || null);
 
     return (
@@ -37,8 +36,23 @@ const SWRTestUser = () => {
                 </Typography> }
             {/* If the SWR is loading, show it */}
             { isLoading && <ContentLoading /> }
+
             { session && <Typography>user: {'\u007B'}</Typography> }
+
             { session && user && <Typography>&nbsp;&nbsp;_id: {user._id},</Typography> }
+
+            { session && user &&
+                <Typography>&nbsp;&nbsp;roles: {'\u007B'}</Typography>}
+            { session && user && user.roles && Object.keys(user.roles).map((role) => (
+                <div key={role}>
+                    <Typography>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{role}: {user.roles[role]},
+                    </Typography>
+                </div>
+            ))}
+            { session && user &&
+                <Typography>&nbsp;&nbsp;{'\u007D'},</Typography> }
+
             { session && user &&
                 <Typography>&nbsp;&nbsp;shows: {'\u005B'}</Typography> }
             { session && user && user.shows && user.shows.map((show) => (
@@ -49,7 +63,10 @@ const SWRTestUser = () => {
                 </div>
             ))}
             { session && user &&
-                <Typography>&nbsp;&nbsp;showsIds: {'\u005B'}</Typography>}
+                <Typography>&nbsp;&nbsp;{'\u005D'},</Typography>}
+
+            { session && user &&
+                <Typography>&nbsp;&nbsp;showIds: {'\u005B'}</Typography>}
             { session && user && user.showIds && user.showIds.map((show) => (
                 <div key={show}>
                     <Typography>
@@ -57,9 +74,9 @@ const SWRTestUser = () => {
                     </Typography>
                 </div>
             ))}
-
             { session && user &&
-                <Typography>&nbsp;&nbsp;{'\u005D'},</Typography>}
+                <Typography>&nbsp;&nbsp;{'\u005D'},</Typography> }
+
             { session && <Typography gutterBottom>{'\u007D'}</Typography> }
             { session &&
                 <Typography

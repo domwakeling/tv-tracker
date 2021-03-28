@@ -41,6 +41,7 @@ const handler = async (req, res) => {
         if (user === null) {
             user = {
                 _id: session.userId,
+                roles: {},
                 shows: []
             };
             await users.insertOne(user);
