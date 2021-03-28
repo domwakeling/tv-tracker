@@ -1,4 +1,3 @@
-/* eslint-disable no-extra-parens */
 import { providers, useSession } from 'next-auth/client';
 import ContentLoading from '../components/ContentLoading.jsx';
 import Head from 'next/head';
@@ -6,15 +5,13 @@ import Layout from '../components/Layout.jsx';
 import PropTypes from 'prop-types';
 import SignInNextAuth from '../components/SignInNextAuth.jsx';
 import UserPortal from '../components/UserPortal.jsx';
-import useUser from '../lib/hooks/useUser';
 
 const Home = (props) => {
     const [session, loading] = useSession();
-    const { user, isLoading, isError } = useUser((session && session.accessToken) || null);
     const { providerList } = props;
 
     return (
-        <Layout user={user}>
+        <Layout>
             <Head>
                 <title>Home - TV Tracker</title>
             </Head>
@@ -26,11 +23,7 @@ const Home = (props) => {
                 { !loading && !session && <SignInNextAuth providerList={providerList} /> }
                 {/* If loaded and a session, load the user portal */}
                 { !loading && session &&
-                    <UserPortal
-                        isErro={isError}
-                        isLoading={isLoading}
-                        user={user}
-                    /> }
+                    <UserPortal /> }
             </>
         </Layout>
     );

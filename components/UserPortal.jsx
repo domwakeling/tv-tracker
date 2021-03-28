@@ -5,15 +5,16 @@ import * as constants from '../lib/constants';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ContentLoading from './ContentLoading.jsx';
-import PropTypes from 'prop-types';
 import SearchShowModal from '../components/SearchShowModal.jsx';
 import Typography from '@material-ui/core/Typography';
 import UserShowList from './UserShowList.jsx';
 import { useSession } from 'next-auth/client';
 import { useState } from 'react';
+import useUser from '../lib/hooks/useUser';
 
-const UserPortal = ({ isError, isLoading, user }) => {
+const UserPortal = () => {
     const [session] = useSession();
+    const { user, isLoading, isError } = useUser((session && session.accessToken) || null);
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleModalOpen = () => {
@@ -100,12 +101,6 @@ const UserPortal = ({ isError, isLoading, user }) => {
                 <Typography gutterBottom>ERROR in SWR (with session)</Typography> }
         </>
     );
-};
-
-UserPortal.propTypes = {
-    isError: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    user: PropTypes.shape().isRequired
 };
 
 export default UserPortal;

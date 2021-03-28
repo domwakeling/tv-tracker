@@ -102,6 +102,21 @@ showOver: boolean       // optional; if set to true, app will never check for up
 See `/data/dummySeasonInfo.js` for an example of the data that is held within the `seasonsInfo`  and
 `showInfo` dictionaries.
 
+## Admin Tools
+
+Admin tools are at `[home_url]/admin`.
+
+To access the user tools a user must have an `admin: true` key-value pair in their `roles` (within
+the `Shows` db and `users` collection, **not** the `UserAuth` db.
+
+At present all users are assigned a "roles" value upon sign-up but this is left empty - to set up
+the first `admin` user it is necessary to access the database and manually add the `admin: true`
+key-value paid to a user.
+
+At present the user-facing element of the site does not surface the `admin` route/page. It is
+possible that this will be added (ideally such that only users with admin rights can see it) in the
+future.
+
 ## Summary of API routes
 
 | Route  | Comment |

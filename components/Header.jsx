@@ -9,14 +9,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Link from '../lib/Link.jsx';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import PropTypes from 'prop-types';
 import Router from 'next/router';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { useState } from 'react';
 
-const Header = ({ user }) => {
+const Header = () => {
     const [session] = useSession();
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -62,13 +61,6 @@ const Header = ({ user }) => {
                     >
                         About
                     </Button>
-                    { session && user && user.roles &&
-                        <Button
-                            color="inherit"
-                            onClick={handleAboutClick}
-                        >
-                            Admin
-                        </Button> }
                     { session &&
                         <Tooltip
                             arrow
@@ -96,10 +88,6 @@ const Header = ({ user }) => {
             </Container>
         </AppBar>
     );
-};
-
-Header.propTypes = {
-    user: PropTypes.shape().isRequired
 };
 
 export default Header;
