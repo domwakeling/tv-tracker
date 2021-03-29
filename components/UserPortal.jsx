@@ -5,6 +5,7 @@ import * as constants from '../lib/constants';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ContentLoading from './ContentLoading.jsx';
+import Router from 'next/router';
 import SearchShowModal from '../components/SearchShowModal.jsx';
 import Typography from '@material-ui/core/Typography';
 import UserShowList from './UserShowList.jsx';
@@ -25,6 +26,11 @@ const UserPortal = () => {
         setModalOpen(false);
     };
 
+    const handleAdminClick = (ev) => {
+        ev.preventDefault();
+        Router.push('/admin');
+    };
+
     return (
         <>
             {/* If the SWR is loading, show it */}
@@ -39,7 +45,10 @@ const UserPortal = () => {
                     >
                         Your Shows
                     </Typography>
-                    <Box mb={2}>
+                    <Box
+                        display="flex"
+                        mb={2}
+                    >
                         <Button
                             color="primary"
                             onClick={handleModalOpen}
@@ -47,6 +56,15 @@ const UserPortal = () => {
                         >
                             Add a show
                         </Button>
+                        <Box flexGrow="1" />
+                        {!isLoading && user && user.roles && user.roles.admin &&
+                            <Button
+                                color="secondary"
+                                onClick={handleAdminClick}
+                                variant="contained"
+                            >
+                                Admin tools
+                            </Button>}
                     </Box>
                     <hr />
                     { user.shows.length === constants.ZERO &&

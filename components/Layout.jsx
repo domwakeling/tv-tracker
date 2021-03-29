@@ -1,6 +1,7 @@
 /* eslint-disable no-extra-parens */
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Footer from '../components/Footer.jsx';
 import Header from '../components/Header.jsx';
 import PropTypes from 'prop-types';
 
@@ -12,6 +13,7 @@ const Layout = ({ children }) => (
                 <main>{children}</main>
             </Box>
         </Container>
+        <Footer />
     </>
 );
 

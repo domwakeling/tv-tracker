@@ -22,3 +22,8 @@ a {
 body {
   background: url('/background.png');
 }
+
+// make scrollbar site on top of content (so it doesn't move sideways)
+html {
+  overflow-y: scroll;
+}

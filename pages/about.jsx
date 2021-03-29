@@ -19,7 +19,7 @@ const About = () => (
             </Typography>
             <Typography
                 gutterBottom
-                variant="subtitle1"
+                variant="body1"
             >
                 TV Tracker lets you find TV shows, add them to a watchlist, and track which
                 episodes you have viewed. It is principally a test project to experiment and
