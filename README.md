@@ -128,6 +128,7 @@ future.
 | ` .../[...nextauth]` | Used by `nextauth.js` package |
 | `api/shows/` | |
 | ` .../checkshowinfo/[imdbid]` | Checks Mongodb matches show info from OMDB <sup>1</sup>|
+| ` .../getallshowsfromdb` | Retrieves shows from Mongodb (paginated) |
 | ` .../getshowfromdb/[imdbid]` | Retrieves show info from Mongodb<sup>2</sup> |
 | ` .../getshowinfo/[imdbid]` | Retrieves show info from OMDB<sup>3</sup> |
 | ` .../saveshowtodb` | Save a show into Mongodb Shows database |
