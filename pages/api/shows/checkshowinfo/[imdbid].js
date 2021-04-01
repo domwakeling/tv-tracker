@@ -59,11 +59,14 @@ const handler = async (req, res) => {
                  * them to newSeasonsInfo
                  */
 
+                // Also check whether the show poster img has changed and if so update it
 
             }
 
-            // Update show for new seasons info
+            // Update show for (i) currShowDetails (which may not have changed) and (ii) 'updated'
+
             currShowDetails.seasonsInfo = newSeasonsInfo;
+            currShowDetails.updated = new Date();
 
             // Change the IMDB to match new show details (which may not differ)
             await shows.replaceOne(query, currShowDetails, options);

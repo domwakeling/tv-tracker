@@ -18,7 +18,8 @@ const handler = async (req, res) => {
         const newShow = {
             _id: show.showInfo.imdbID,
             seasonsInfo: show.seasonsInfo,
-            showInfo: show.showInfo
+            showInfo: show.showInfo,
+            updated: new Date()
         };
 
         await shows.insertOne(newShow);

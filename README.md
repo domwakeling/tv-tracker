@@ -96,11 +96,14 @@ seasonsInfo: {
 showInfo: {
   ...                   // information on the overall show
 },
-showOver: boolean       // optional; if set to true, app will never check for updates
+showOver: boolean,      // optional; if set to true, app will never check for updates
+updated: date           // optional* (but generally used), last time show info was checked/updated
 ```
 
 See `/data/dummySeasonInfo.js` for an example of the data that is held within the `seasonsInfo`  and
 `showInfo` dictionaries.
+
+\* The `updated` field is now added by default, but may not exist on a db that has older records.
 
 ## Admin Tools
 
@@ -142,3 +145,19 @@ matching items in **users** collection &mdash; this is effectively to deal with 
 3. See `data/dummyShowInfo.js` for an example
 4. Limited to ten results, see `data/dummsySearchinfo.js` from an example
 5. Looks up `accessToken` in the Auth database, gets user _id, looks that up in the Shows database
+
+## To Do
+
+1. Complete the `checkshowinfo` end point - at present it does not know how to deal with additional
+   seasons
+1. Admin portal - list of shows, last updated
+1. Admin portal - ability to update show, mark show as over (no further seasons)
+1. `checkshowinfo` should also see whether there's a new show poster and if so change it?
+1. Consider whether it's preferable/advisable to have a list of user `_id`s within each show so that
+   we don't have to search for users who contain that show? Upside is making it easier to update
+   info for those users, downside is that it introduces two sets of data and potential for clashes
+1. Add pagination of shows (which could be a very long list) for the Admin portal, and consider
+   doing the same for the User portal - at the moment its fine but what happens when you have 200
+   shows in your list?
+1. Also consider whether to have a 'recently watched' section (full size images) and then 'current'
+   and 'watched' with ever-reducing card sizes?
