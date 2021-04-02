@@ -122,22 +122,23 @@ future.
 
 ## Summary of API routes
 
-| Route  | Comment |
-|--------|---------|
-| `api/auth/` | |
-| ` .../[...nextauth]` | Used by `nextauth.js` package |
-| `api/shows/` | |
-| ` .../checkshowinfo/[imdbid]` | Checks Mongodb matches show info from OMDB <sup>1</sup>|
-| ` .../getallshowsfromdb` | Retrieves shows from Mongodb (paginated) |
-| ` .../getshowfromdb/[imdbid]` | Retrieves show info from Mongodb<sup>2</sup> |
-| ` .../getshowinfo/[imdbid]` | Retrieves show info from OMDB<sup>3</sup> |
-| ` .../saveshowtodb` | Save a show into Mongodb Shows database |
-| ` ...search/[searchterm]` | Retrieves a search from OMDB<sup>4</sup> |
+| Route  | Action | Comment |
+|--------|--------|---------|
+| `api/auth/` | | |
+| ` .../[...nextauth]` | | Used by `nextauth.js` package |
+| `api/shows/` | | |
+| ` .../checkshowinfo/[imdbid]` | `GET` | Checks Mongodb matches show info from OMDB <sup>1</sup>|
+| ` .../getallshowsfromdb` | `POST` | Retrieves shows from Mongodb (paginated) |
+| ` .../getshowfromdb/[imdbid]` | `GET` | Retrieves show info from Mongodb<sup>2</sup> |
+| ` .../getshowinfo/[imdbid]` | `GET` | Retrieves show info from OMDB<sup>3</sup> |
+| ` .../saveshowtodb` | `POST` | Save a show into Mongodb Shows database |
+| ` ...search/[searchterm]` | `GET` | Retrieves a search from OMDB<sup>4</sup> |
+| ` .../setshowover/[imdbid]` | `POST` | Sets show over (true/false passed in body) |
 | `api/user/` | |
-| ` .../accesstoken/[accesstoken]` | Uses session `accessToken` to get the user from Mongodb<sup>5</sup> |
-| ` .../addshow` | Adds a show to a user in Mongodb Shows database |
-| ` .../removeshow` | Removes show from a user in Mongodb Shows database |
-| ` .../updateshow` | Updates show for a user in Mongodb Shows database |
+| ` .../accesstoken/[accesstoken]` | `GET` | Uses session `accessToken` to get the user from Mongodb<sup>5</sup> |
+| ` .../addshow` | `POST` | Adds a show to a user in Mongodb Shows database |
+| ` .../removeshow` | `POST` | Removes show from a user in Mongodb Shows database |
+| ` .../updateshow` | `POST` | Updates show for a user in Mongodb Shows database |
 
 **Footnotes**
 1. If Mongodb doesn't match OMDB, (i) updates Mongodb's **shows** collection and then updates all
