@@ -1,6 +1,6 @@
 /* eslint-disable no-extra-parens */
 import Head from 'next/head';
-import Layout from '../components/Layout.jsx';
+import Layout from '../components/layout/Layout.jsx';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 

@@ -1,8 +1,8 @@
 /* eslint-disable no-extra-parens */
-import AdminPortal from '../components/AdminPortal.jsx';
-import ContentLoading from '../components/ContentLoading.jsx';
+import AdminPortal from '../components/admin/AdminPortal.jsx';
+import ContentLoading from '../components/layout/ContentLoading.jsx';
 import Head from 'next/head';
-import Layout from '../components/Layout.jsx';
+import Layout from '../components/layout/Layout.jsx';
 import Typography from '@material-ui/core/Typography';
 import { useSession } from 'next-auth/client';
 

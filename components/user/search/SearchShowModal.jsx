@@ -1,15 +1,15 @@
 /* eslint-disable max-statements */
-import * as constants from '../lib/constants';
+import * as constants from '../../../lib/constants';
 import Backdrop from '@material-ui/core/Backdrop';
 import Box from '@material-ui/core/Box';
 import CancelIcon from '@material-ui/icons/Cancel';
-import ContentLoading from '../components/ContentLoading.jsx';
+import ContentLoading from '../../layout/ContentLoading.jsx';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
 import PropTypes from 'prop-types';
-import SearchShowForm from '../components/SearchShowForm.jsx';
-import SearchShowList from '../components/SearchShowList.jsx';
+import SearchShowForm from './SearchShowForm.jsx';
+import SearchShowList from './SearchShowList.jsx';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';

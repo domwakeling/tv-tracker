@@ -1,10 +1,10 @@
 import { providers, useSession } from 'next-auth/client';
-import ContentLoading from '../components/ContentLoading.jsx';
+import ContentLoading from '../components/layout/ContentLoading.jsx';
 import Head from 'next/head';
-import Layout from '../components/Layout.jsx';
+import Layout from '../components/layout/Layout.jsx';
 import PropTypes from 'prop-types';
-import SignInNextAuth from '../components/SignInNextAuth.jsx';
-import UserPortal from '../components/UserPortal.jsx';
+import SignInNextAuth from '../components/user/SignInNextAuth.jsx';
+import UserPortal from '../components/user/portal/UserPortal.jsx';
 
 const Home = (props) => {
     const [session, loading] = useSession();

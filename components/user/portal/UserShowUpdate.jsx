@@ -2,12 +2,12 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-statements */
 /* eslint-disable no-extra-parens */
-import * as constants from '../lib/constants';
+import * as constants from '../../../lib/constants';
 import { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import ContentLoading from './ContentLoading.jsx';
+import ContentLoading from '../../layout/ContentLoading.jsx';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';

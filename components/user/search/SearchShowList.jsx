@@ -1,5 +1,5 @@
 /* eslint-disable no-extra-parens */
-import * as constants from '../lib/constants';
+import * as constants from '../../../lib/constants';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import SearchShowCard from './SearchShowCard.jsx';

@@ -1,17 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
-import * as constants from '../lib/constants';
+import * as constants from '../../../lib/constants';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import ContentLoading from './ContentLoading.jsx';
+import ContentLoading from '../../layout/ContentLoading.jsx';
 import Router from 'next/router';
-import SearchShowModal from '../components/SearchShowModal.jsx';
+import SearchShowModal from '../search/SearchShowModal.jsx';
 import Typography from '@material-ui/core/Typography';
 import UserShowList from './UserShowList.jsx';
 import { useSession } from 'next-auth/client';
 import { useState } from 'react';
-import useUser from '../lib/hooks/useUser';
+import useUser from '../../../lib/hooks/useUser';
 
 const UserPortal = () => {
     const [session] = useSession();

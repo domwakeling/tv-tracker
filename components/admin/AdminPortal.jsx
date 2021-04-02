@@ -1,17 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
-// import * as constants from '../lib/constants';
+import * as constants from '../../lib/constants';
 // import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import ContentLoading from './ContentLoading.jsx';
+import ContentLoading from '../layout/ContentLoading.jsx';
 // import SearchShowModal from '../components/SearchShowModal.jsx';
 import Typography from '@material-ui/core/Typography';
 // import UserShowList from './UserShowList.jsx';
 import axios from 'axios';
 import { useSession } from 'next-auth/client';
 import { useState } from 'react';
-import useUser from '../lib/hooks/useUser';
+import useUser from '../../lib/hooks/useUser';
 
 const UserPortal = () => {
     const [session] = useSession();
@@ -24,8 +24,8 @@ const UserPortal = () => {
         const res = await axios.post(
             '/api/shows/getallshowsfromdb',
             {
-                limit: 3,
-                page: Math.floor(shows.length/3) + 1
+                limit: constants.DODEC - (shows.length % constants.DODEC),
+                page: Math.floor(shows.length / constants.DODEC) + constants.ONE
             }
         );
         const showData = res.data;

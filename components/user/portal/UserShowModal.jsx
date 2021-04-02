@@ -3,15 +3,15 @@
 /* eslint-disable no-extra-parens */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-statements */
-import * as constants from '../lib/constants';
+import * as constants from '../../../lib/constants';
 import { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CancelIcon from '@material-ui/icons/Cancel';
-import ContentLoading from '../components/ContentLoading.jsx';
+import ContentLoading from '../../layout/ContentLoading.jsx';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import MyModal from './MyModal.jsx';
+import MyModal from '../../layout/MyModal.jsx';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import UserShowEpisode from './UserShowEpisode.jsx';
