@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
-import ContentLoading from './ContentLoading.jsx';
+import ContentLoading from '../layout/ContentLoading.jsx';
 import Typography from '@material-ui/core/Typography';
 import { useSession } from 'next-auth/client';
-import useUser from '../lib/hooks/useUser';
+import useUser from '../../lib/hooks/useUser';
 
 const SWRTestUser = () => {
     const [session] = useSession();

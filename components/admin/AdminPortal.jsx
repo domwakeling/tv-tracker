@@ -2,12 +2,11 @@
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
 import * as constants from '../../lib/constants';
-// import Box from '@material-ui/core/Box';
+import AdminShowCard from './AdminShowCard.jsx';
 import Button from '@material-ui/core/Button';
 import ContentLoading from '../layout/ContentLoading.jsx';
-// import SearchShowModal from '../components/SearchShowModal.jsx';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-// import UserShowList from './UserShowList.jsx';
 import axios from 'axios';
 import { useSession } from 'next-auth/client';
 import { useState } from 'react';
@@ -29,7 +28,7 @@ const UserPortal = () => {
             }
         );
         const showData = res.data;
-        if (showData.length < 3) {
+        if ((shows.length + showData.length) % constants.DODEC !== constants.ZERO) {
             setAllShows(true);
         }
         const newShows = [...shows, ...showData];
@@ -39,7 +38,7 @@ const UserPortal = () => {
     const handleButtonClick = (ev) => {
         ev.preventDefault();
         getMoreShows();
-    }
+    };
     
     // const handleModalOpen = () => {
     //     setModalOpen(true);
@@ -48,8 +47,6 @@ const UserPortal = () => {
     // const handleModalClose = () => {
     //     setModalOpen(false);
     // };
-
-    console.log(shows);
 
     return (
         <>
@@ -69,19 +66,33 @@ const UserPortal = () => {
                 <>
                     <Typography
                         gutterBottom
-                        variant="body1"
+                        variant="h5"
                     >
-                        Admin page text ho hum.
+                        Shows List
                     </Typography>
-                    <Typography
-                        gutterBottom
-                        variant="body1"
+                    <Grid
+                        alignItems="stretch"
+                        container
+                        spacing={2}
                     >
-                        Admin page text ho hum.
-                    </Typography>
-                    { shows && shows.map((show) => (
-                        <div key={show._id}>{show._id}</div>
-                    ))}
+                        { shows && shows.map((show) => (
+                            <Grid
+                                display="flex"
+                                item
+                                key={show._id}
+                                lg={3}
+                                md={4}
+                                sm={6}
+                                xs={12}
+                            >
+                                <AdminShowCard
+                                    key={show._id}
+                                    show={show}
+                                />
+                            </Grid>
+                        ))}
+                    </Grid>
+                    <br />
                     <Button
                         color="primary"
                         disabled={allShows}
