@@ -3,7 +3,7 @@ import * as constants from '../../../lib/constants';
 import { MongoClient } from 'mongodb';
 
 const handler = async (req, res) => {
-    const { limit, page } = req.body;
+    const { limit, showOver, skip } = req.body;
     const client = new MongoClient(process.env.SHOW_DB_URL, { useUnifiedTopology: true });
 
     try {
@@ -16,9 +16,17 @@ const handler = async (req, res) => {
         // Construct query
         const query = {};
 
+        // Conditionals: have we been passed a showOver criteria?
+        if (showOver === false) {
+            query.showOver = { $in: [false, null] };
+        } else if (showOver) {
+            query.showOver = showOver;
+        }
+
         const nextPage = await shows.
             find(query).
-            skip((page - constants.ONE) * limit).
+            sort({ updated: constants.ONE }).
+            skip(skip).
             limit(limit).
             toArray();
 

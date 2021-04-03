@@ -21,7 +21,10 @@ const handler = async (req, res) => {
         };
 
         const update = {
-            $set: { showOver }
+            $set: {
+                showOver,
+                updated: new Date()
+            }
         };
 
         const check = await shows.updateOne(query, update);

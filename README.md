@@ -116,19 +116,20 @@ At present all users are assigned a "roles" value upon sign-up but this is left 
 the first `admin` user it is necessary to access the database and manually add the `admin: true`
 key-value paid to a user.
 
-At present the user-facing element of the site does not surface the `admin` route/page. It is
-possible that this will be added (ideally such that only users with admin rights can see it) in the
-future.
+At present the user-facing element of the site surfaces the `admin` page through a button at the
+head of the `<UserPortal />` component. This would ideally sit in the `<Header />` component but
+this led to issues when using a React hook and is currently abandoned (issue being that the
+link/button should only be visible for those users **with** admin rights).
 
 ## Summary of API routes
 
-| Route  | Action | Comment |
+| Route  | Method | Comment |
 |--------|--------|---------|
 | `api/auth/` | | |
 | ` .../[...nextauth]` | | Used by `nextauth.js` package |
 | `api/shows/` | | |
 | ` .../checkshowinfo/[imdbid]` | `GET` | Checks Mongodb matches show info from OMDB <sup>1</sup>|
-| ` .../getallshowsfromdb` | `POST` | Retrieves shows from Mongodb (paginated) |
+| ` .../getallshowsfromdb` | `POST` | Retrieves all shows from Mongodb (with pagination) |
 | ` .../getshowfromdb/[imdbid]` | `GET` | Retrieves show info from Mongodb<sup>2</sup> |
 | ` .../getshowinfo/[imdbid]` | `GET` | Retrieves show info from OMDB<sup>3</sup> |
 | ` .../saveshowtodb` | `POST` | Save a show into Mongodb Shows database |

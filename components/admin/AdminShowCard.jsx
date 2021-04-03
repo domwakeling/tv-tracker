@@ -3,6 +3,8 @@
 /* eslint-disable no-extra-parens */
 import * as constants from '../../lib/constants';
 import { useEffect, useState } from 'react';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -11,7 +13,7 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
-const AdminShowCard = ({ show }) => {
+const AdminShowCard = ({ listUpdate, show }) => {
 
     const [checked, setChecked] = useState(true);
 
@@ -28,13 +30,20 @@ const AdminShowCard = ({ show }) => {
                 showOver
             }
         );
+        return true;
     };
 
-    const handleChange = (ev) => {
+    const handleActiveSlider = async (ev) => {
         ev.preventDefault();
         const newChecked = !checked;
         setChecked(newChecked);
-        setShowOver(!newChecked);
+        await setShowOver(!newChecked);
+        listUpdate();
+    };
+
+    const handleShowUpdate = async () => {
+        await axios(`/api/shows/checkshowinfo/${show._id}`);
+        listUpdate();
     };
 
     const posterURL = show.showInfo.Poster ||
@@ -77,6 +86,33 @@ const AdminShowCard = ({ show }) => {
                         height: '10px'
                     }}
                     />
+                    <Box ml={0.5}>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={checked}
+                                    color="primary"
+                                    name="checkedA"
+                                    onClick={handleActiveSlider}
+                                    size="small"
+                                />
+                            }
+                            label={checked
+                                ? 'Show active'
+                                : 'Show over'}
+                        />
+                    </Box>
+                    <div style={{ float: 'right' }}>
+                        <Button
+                            color="primary"
+                            disabled={!checked}
+                            onClick={handleShowUpdate}
+                            size="small"
+                            variant="contained"
+                        >
+                            Update now
+                        </Button>
+                    </div>
                     <Typography
                         color={updated
                             ? 'textPrimary'
@@ -84,22 +120,8 @@ const AdminShowCard = ({ show }) => {
                         noWrap
                         variant="body1"
                     >
-                        Last updated: {lastUpdate}
+                        Updated: {lastUpdate}
                     </Typography>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={checked}
-                                color="primary"
-                                name="checkedA"
-                                onClick={handleChange}
-                                size="small"
-                            />
-                        }
-                        label={checked
-                            ? 'Show active'
-                            : 'Show over'}
-                    />
                 </CardContent>
             </Card>
         </div>
@@ -107,7 +129,13 @@ const AdminShowCard = ({ show }) => {
 };
 
 AdminShowCard.propTypes = {
+    listUpdate: PropTypes.func,
     show: PropTypes.shape().isRequired
+};
+
+AdminShowCard.defaultProps = {
+    // eslint-disable-next-line no-empty-function
+    listUpdate: () => {}
 };
 
 export default AdminShowCard;

@@ -16,20 +16,38 @@ const AdminShowList = ({ title, url }) => {
     const [firstLoad, setFirstLoad] = useState(false);
     const [allShows, setAllShows] = useState(false);
 
+    // Get (up to) 12 more shows
     const getMoreShows = async () => {
         const res = await axios.post(
             url,
             {
                 limit: constants.DODEC - (shows.length % constants.DODEC),
-                page: Math.floor(shows.length / constants.DODEC) + constants.ONE
+                skip: shows.length
             }
         );
         const showData = res.data;
-        if ((shows.length + showData.length) % constants.DODEC !== constants.ZERO) {
+        if (showData.length === constants.ZERO) {
             setAllShows(true);
         }
         const newShows = [...shows, ...showData];
         setShows(newShows);
+        setFirstLoad(true);
+    };
+
+    // Reload the shows list *from scratch* to the same length as current
+    const reloadShows = async () => {
+        const res = await axios.post(
+            url,
+            {
+                limit: shows.length,
+                skip: 0
+            }
+        );
+        const showData = res.data;
+        if (showData.length === constants.ZERO) {
+            setAllShows(false);
+        }
+        setShows(showData);
         setFirstLoad(true);
     };
 
@@ -69,6 +87,7 @@ const AdminShowList = ({ title, url }) => {
                     >
                         <AdminShowCard
                             key={show._id}
+                            listUpdate={reloadShows}
                             show={show}
                         />
                     </Grid>
@@ -81,7 +100,7 @@ const AdminShowList = ({ title, url }) => {
                 onClick={handleButtonClick}
                 variant="contained"
             >
-                Add More Shows
+                More
             </Button>
         </>
     );
