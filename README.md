@@ -149,6 +149,16 @@ matching items in **users** collection &mdash; this is effectively to deal with 
 4. Limited to ten results, see `data/dummsySearchinfo.js` from an example
 5. Looks up `accessToken` in the Auth database, gets user _id, looks that up in the Shows database
 
+## Testing
+
+The project uses [Jest](https://jestjs.io) and [React Testing Library](https://testing-library.com)
+for tests.
+
+At present tests **partly** cover the `components/user/portal` folder, with circa 72% coverage *for
+files that are being tested*. The aim is to expand this such that the `components` folder and
+(ideally) the `pages/api` folder are fully covered, although this is dependent on working out how
+to properly mock a MongoDB back end.
+
 ## To Do
 
 1. Complete the `checkshowinfo` end point - at present it does not know how to deal with additional

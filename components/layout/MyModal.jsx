@@ -14,6 +14,7 @@ const MyModal = ({ ariaD, ariaL, children, modalCloseHandler, openState }) => (
         aria-describedby={ariaD}
         aria-labelledby={ariaL}
         closeAfterTransition
+        data-testid={ariaL}
         disableScrollLock
         onClose={modalCloseHandler}
         open={openState}

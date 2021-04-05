@@ -8,6 +8,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import UserShowList from '../portal/UserShowList.jsx';
 import mediaQuery from 'css-mediaquery';
 
+/*
+ * Tests for the UserShowList component also provide integration tests to ensure that the 'update'
+ * modal is shown when a UserShowCard is clicked
+ */
+
 describe('Testing UserShowList', () => {
 
     const dummyList = (
@@ -21,18 +26,20 @@ describe('Testing UserShowList', () => {
     const shows = [
         {
             _id: '1',
+            episodes: [5, 5],
             lastEpisode: {
-                episode: 1,
-                season: 1
+                episode: 0,
+                season: 0
             },
             lastWatched: 0,
             title: 'Show 1'
         },
         {
             _id: '2',
+            episodes: [5, 5, 5],
             lastEpisode: {
-                episode: 2,
-                season: 1
+                episode: 5,
+                season: 3
             },
             lastWatched: 1,
             title: 'Show 2'
@@ -47,6 +54,8 @@ describe('Testing UserShowList', () => {
         />
     );
 
+    // Check it renders
+
     test('an empty shows list renders', () => {
         render(dummyList);
     });
@@ -54,6 +63,8 @@ describe('Testing UserShowList', () => {
     test('a non-empty shows list renders', () => {
         render(dummyList2);
     });
+
+    // Check that cards are being generated
 
     test('a list of two shows drives two cards (images)', () => {
         render(dummyList2);
@@ -65,8 +76,11 @@ describe('Testing UserShowList', () => {
         expect(screen.queryAllByRole('header')).toHaveLength(0);
     });
 
+    // Test that the modal shows / doesn't show
+
     test('clicking on a card opens a modal', () => {
         render(dummyList2);
+        expect(screen.queryAllByRole('heading')).toHaveLength(0);
         fireEvent(
             screen.getAllByRole('img')[0],
             new MouseEvent('click', {
@@ -77,6 +91,25 @@ describe('Testing UserShowList', () => {
         expect(screen.getAllByRole('heading')).toHaveLength(1);
     });
 
+    test('clicking elsewhere closes the modal again', () => {
+        render(dummyList2);
+        fireEvent(
+            screen.getAllByRole('img')[0],
+            new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            })
+        );
+        fireEvent(
+            screen.getByLabelText('close modal'),
+            new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            })
+        );
+        expect(screen.queryAllByRole('heading')).toHaveLength(0);
+    });
+
     // Prep for screen-width tests
     const createMatchMedia = (width) => (query) => ({
         addListener: () => { },
@@ -85,6 +118,8 @@ describe('Testing UserShowList', () => {
         }),
         removeListener: () => { }
     });
+
+    // Check that heightPref is being passed to UserShowCard's and is implementing
 
     test('very small screen (<= 600px) gets 250px image on card', () => {
         window.matchMedia = createMatchMedia(600);
