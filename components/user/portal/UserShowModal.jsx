@@ -43,6 +43,7 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
                 filter((show) => show._id === modalShowId)[constants.ZERO].lastEpisode);
             setActiveShow(userShows.filter((show) => show._id === modalShowId)[constants.ZERO]);
             getActiveShowDetail();
+            setSpinning(false);
         } else {
             setLastSeen({});
             setActiveShow({});
@@ -52,9 +53,7 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
 
     const modalCloseHandler = (event) => {
         event.preventDefault();
-        setLastSeen({});
         onCloseHandler();
-        setSpinning(false);
     };
 
     const dialogCloseHandler = (event) => {
@@ -97,19 +96,9 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
         if (!episode || !episode.season || !episode.episode) {
             return '';
         }
-        if (episode.season === constants.ZERO || episode.episode === constants.ZERO) {
-            return '';
-        }
         if (!activeShowDetail || !activeShowDetail.seasonsInfo) {
             return '...';
         }
-        if (episode.season > activeShowDetail.seasonsInfo.length) {
-            return '';
-        }
-        // Dealt with all edge cases (almost: wont catch error of episode > season length and NOT last season), now get the title
-        /* Get some weird edge-cases with unreleased seasons, where not all the episodes have been
-         * added to the database yet ...
-         */
         try {
             return activeShowDetail.
                 seasonsInfo.
@@ -118,7 +107,7 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
                 filter((ep) => parseInt(ep.Episode, constants.DEC) === episode.episode)[constants.ZERO].
                 Title;
         } catch {
-            return '';
+            return '...';
         }
     };
 
@@ -157,6 +146,7 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
         if (res.status === constants.RESPONSE_OK) {
             mutate(`api/user/accesstoken/${accessToken}`);
         }
+        setSpinning(false);
         modalCloseHandler({ preventDefault: () => {} });
     };
 
@@ -200,6 +190,7 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
                     >
                         <UserShowEpisode
                             cardTitle="Last Watched"
+                            data-testid="last-watched-show"
                             episode={lastSeen}
                             heightPref={episodeHeightPref}
                             title={showTitle(lastSeen)}
@@ -208,6 +199,7 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
                         <UserShowEpisode
                             allSeen={allWatched()}
                             cardTitle="Up Next"
+                            data-testid="next-up-show"
                             episode={activeShow.episodes
                                 ? nextEpisode()
                                 : {}}

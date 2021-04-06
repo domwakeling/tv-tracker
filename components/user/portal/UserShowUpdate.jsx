@@ -83,6 +83,7 @@ const UserShowUpdate = ({ episodes, lastSeen, setLastSeen }) => {
                                         <div style={{ width: '80px' }}>
                                             <InputLabel>Season</InputLabel>
                                             <Select
+                                                data-testid="select-season"
                                                 fullWidth
                                                 id="demo-simple-select"
                                                 labelId="select-season"
@@ -105,7 +106,10 @@ const UserShowUpdate = ({ episodes, lastSeen, setLastSeen }) => {
                                         </div>
                                     </FormControl>
                                     <div style={{ width: '15px' }} />
-                                    <FormControl color="secondary">
+                                    <FormControl
+                                        color="secondary"
+                                        data-testid="select-episode"
+                                    >
                                         <div style={{ width: '80px' }}>
                                             <InputLabel>Episode</InputLabel>
                                             <Select

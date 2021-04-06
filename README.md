@@ -154,10 +154,26 @@ matching items in **users** collection &mdash; this is effectively to deal with 
 The project uses [Jest](https://jestjs.io) and [React Testing Library](https://testing-library.com)
 for tests.
 
-At present tests **partly** cover the `components/user/portal` folder, with circa 72% coverage *for
+At present tests **partly** cover the `components/user/portal` folder, with circa 90% coverage *for
 files that are being tested*. The aim is to expand this such that the `components` folder and
 (ideally) the `pages/api` folder are fully covered, although this is dependent on working out how
 to properly mock a MongoDB back end.
+
+File                            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s  
+--------------------------------|---------|----------|---------|---------|--------------------
+All files                       |    92.2 |    94.37 |   86.84 |   92.09 |                    
+ `components/layout`            |     100 |      100 |     100 |     100 |                    
+`\|-  ContentLoading.jsx`       |     100 |      100 |     100 |     100 |                    
+`\|-  MyModal.jsx`              |     100 |      100 |     100 |     100 |                    
+ `components/user/portal`       |   91.41 |    94.37 |   86.11 |   91.27 |                    
+`\|-  UserShowCard.jsx`         |     100 |      100 |     100 |     100 |                    
+`\|-  UserShowEpisode.jsx`      |     100 |      100 |     100 |     100 |                    
+`\|-  UserShowList.jsx`         |     100 |      100 |     100 |     100 |                    
+`\|-  UserShowModal.jsx`        |   85.14 |     92.5 |   73.68 |   84.93 | 60-61,65-75,79,110 
+`\|-  UserShowRemoveDialog.jsx` |     100 |      100 |     100 |     100 |                    
+`\|-  UserShowUpdate.jsx`       |     100 |     87.5 |     100 |     100 | 69                 
+`lib`                           |     100 |      100 |     100 |     100 |                    
+`\|-  constants.js`             |     100 |      100 |     100 |     100 |                    
 
 ## To Do
 
