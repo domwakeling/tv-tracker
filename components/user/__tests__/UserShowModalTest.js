@@ -182,6 +182,18 @@ describe('Testing UserShowModal', () => {
         expect(screen.getByText('#2.3'));
     });
 
+    test('handles missing episodes gracefully', async () => {
+        const resp = dummyShowInfo('3');
+        // Remove an episode from end of season 2
+        resp.seasonsInfo[1].Episodes.pop();
+        axios.mockImplementationOnce(() => Promise.resolve({ data: { show: resp } }));
+        render(dummyModal4);
+        axiosCount += 1;
+        expect(screen.getByText('S2 E3'));
+        await waitFor(() => expect(axios).toHaveBeenCalledTimes(axiosCount));
+        expect(screen.getByText('...'));
+    });
+
     test('change the last seen show', async () => {
         const resp = dummyShowInfo('3');
         axios.mockImplementationOnce(() => Promise.resolve({ data: { show: resp } }));

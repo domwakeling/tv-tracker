@@ -23,6 +23,8 @@ swr.mutate = jest.fn();
 describe('Testing UserShowList', () => {
 
     let axiosCount = 0;
+    let axiosPostCount = 0;
+    let swrMutateCount = 0;
 
     const dummyList = (
         <UserShowList
@@ -200,7 +202,7 @@ describe('Testing UserShowList', () => {
         return dummyShow;
     };
 
-    test('open update model, change the last seen show and update', async () => {
+    test('open update modal, change the last seen show and update', async () => {
         const resp = dummyShowInfo('3');
         axios.mockImplementationOnce(() => Promise.resolve({ data: { show: resp } }));
         render(dummyList2);
@@ -222,11 +224,69 @@ describe('Testing UserShowList', () => {
         expect(screen.getByText('S3 E2'));
         // Trigger the update button
         axios.post.mockImplementationOnce(() => Promise.resolve({ status: constants.RESPONSE_OK }));
+        axiosPostCount += 1;
+        swrMutateCount += 1;
         fireEvent.click(buttons[3]);
         // Wait for the close handler to have called mutate
-        await waitFor(() => expect(swr.mutate).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(axiosPostCount));
+        await waitFor(() => expect(swr.mutate).toHaveBeenCalledTimes(swrMutateCount));
         // Modal should be off-screen so no text 'update'
         expect(screen.queryAllByText('Update')).toHaveLength(0);
+    });
+
+    test('open update modal, show dialog and cancel', async () => {
+        const resp = dummyShowInfo('3');
+        axios.mockImplementationOnce(() => Promise.resolve({ data: { show: resp } }));
+        render(dummyList2);
+        // Trigger the modal
+        axiosCount += 1;
+        fireEvent.click(screen.getAllByRole('img')[0]);
+        await waitFor(() => expect(axios).toHaveBeenCalledTimes(axiosCount));
+        // Get buttons
+        const buttons = screen.getAllByRole('button');
+        // Should be no dialog yet
+        expect(screen.queryAllByTestId('delete-dialog')).toHaveLength(0);
+        // Trigger the update button
+        fireEvent.click(buttons[4]);
+        // Dialog should have shown up
+        expect(screen.queryAllByTestId('delete-dialog')).toHaveLength(1);
+        // Click on cancel button
+        const deleteDialog = within(screen.getByTestId('delete-dialog'));
+        fireEvent.click(deleteDialog.getAllByRole('button')[0]);
+        // Expect no further calls (struggling to test that there's no dialog)
+        await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(axiosPostCount));
+        await waitFor(() => expect(swr.mutate).toHaveBeenCalledTimes(swrMutateCount));
+    });
+
+    test('open update modal, show dialog and cancel', async () => {
+        const resp = dummyShowInfo('3');
+        axios.mockImplementationOnce(() => Promise.resolve({ data: { show: resp } }));
+        render(dummyList2);
+        // Trigger the modal
+        axiosCount += 1;
+        fireEvent.click(screen.getAllByRole('img')[0]);
+        await waitFor(() => expect(axios).toHaveBeenCalledTimes(axiosCount));
+        // Get buttons
+        const buttons = screen.getAllByRole('button');
+        // Should be no dialog yet
+        expect(screen.queryAllByTestId('delete-dialog')).toHaveLength(0);
+        // Trigger the update button
+        fireEvent.click(buttons[4]);
+        // Dialog should have shown up
+        expect(screen.queryAllByTestId('delete-dialog')).toHaveLength(1);
+        // Click on cancel button
+        axios.post.mockImplementationOnce(() => Promise.resolve({ status: constants.RESPONSE_OK }));
+        const deleteDialog = within(screen.getByTestId('delete-dialog'));
+        fireEvent.click(deleteDialog.getAllByRole('button')[1]);
+        // Expect there to be both an axios.post and swr.mutate
+        axiosPostCount += 1;
+        swrMutateCount += 1;
+        await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(axiosPostCount));
+        await waitFor(() => expect(swr.mutate).toHaveBeenCalledTimes(swrMutateCount));
+        // Delete dialog should have gone again
+        expect(screen.queryAllByTestId('delete-dialog')).toHaveLength(0);
+        // Expect modal to have gone
+        expect(screen.queryAllByRole('heading')).toHaveLength(0);
     });
 
 });

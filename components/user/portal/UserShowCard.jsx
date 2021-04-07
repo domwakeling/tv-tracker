@@ -14,7 +14,10 @@ const UserShowCard = ({ clickHandler, heightPref, show }) => {
     };
 
     return (
-        <div style={{ cursor: 'pointer' }}>
+        <div
+            data-testid="user-card"
+            style={{ cursor: 'pointer' }}
+        >
             <Card
                 onClick={cardClickHandler}
                 raised

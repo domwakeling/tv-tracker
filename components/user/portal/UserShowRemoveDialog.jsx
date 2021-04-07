@@ -11,6 +11,7 @@ const UserShowRemoveDialog = ({ dialogCloseHandler, dialogConfirmHandler, dialog
     <Dialog
         aria-describedby="alert-dialog-description"
         aria-labelledby="alert-dialog-title"
+        data-testid="delete-dialog"
         onClose={dialogCloseHandler}
         open={dialogOpen}
     >

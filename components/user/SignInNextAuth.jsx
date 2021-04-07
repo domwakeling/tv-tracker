@@ -39,6 +39,7 @@ const SignInNextAuth = ({ providerList }) => (
                 >
                     <Button
                         color="secondary"
+                        data-testid="sign-in-button"
                         onClick={() => signIn(provider.id)}
                         type="button"
                         variant="contained"

@@ -9,7 +9,6 @@ import useUser from '../../lib/hooks/useUser';
 const SWRTestUser = () => {
     const [session] = useSession();
     const { user, isLoading, isError } = useUser((session && session.accessToken) || null);
-
     return (
         <>
             <br />
@@ -21,6 +20,7 @@ const SWRTestUser = () => {
                 SWR Testing
             </Typography>
             {/* If there's an error, show it */}
+            { isError && <p>PROBLEM</p>}
             { session && isError &&
                 <Typography gutterBottom>ERROR in SWR (with session)</Typography> }
             {/* If there's no session, say so */}

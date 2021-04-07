@@ -7,7 +7,7 @@ const ContentLoading = () => (
         justifyContent: 'center'
     }}
     >
-        <CircularProgress />
+        <CircularProgress data-testid="content-loading" />
     </div>
 );
 

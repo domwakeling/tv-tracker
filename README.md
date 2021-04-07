@@ -154,26 +154,48 @@ matching items in **users** collection &mdash; this is effectively to deal with 
 The project uses [Jest](https://jestjs.io) and [React Testing Library](https://testing-library.com)
 for tests.
 
-At present tests **partly** cover the `components/user/portal` folder, with circa 90% coverage *for
-files that are being tested*. The aim is to expand this such that the `components` folder and
-(ideally) the `pages/api` folder are fully covered, although this is dependent on working out how
-to properly mock a MongoDB back end.
+At present tests **partly** cover the `components/user/portal` folder, with circa 80% coverage *for
+files that are being tested* - but only circa 50% coverage of all 'business logic' and UI. The aim
+is to expand this such that the `components` folder and (ideally) the `pages/api` folder are fully
+covered, although the latter is dependent on working out how to properly mock a MongoDB back end.
 
-File                            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s  
---------------------------------|---------|----------|---------|---------|--------------------
-All files                       |    92.2 |    94.37 |   86.84 |   92.09 |                    
- `components/layout`            |     100 |      100 |     100 |     100 |                    
-`\|-  ContentLoading.jsx`       |     100 |      100 |     100 |     100 |                    
-`\|-  MyModal.jsx`              |     100 |      100 |     100 |     100 |                    
- `components/user/portal`       |   91.41 |    94.37 |   86.11 |   91.27 |                    
-`\|-  UserShowCard.jsx`         |     100 |      100 |     100 |     100 |                    
-`\|-  UserShowEpisode.jsx`      |     100 |      100 |     100 |     100 |                    
-`\|-  UserShowList.jsx`         |     100 |      100 |     100 |     100 |                    
-`\|-  UserShowModal.jsx`        |   85.14 |     92.5 |   73.68 |   84.93 | 60-61,65-75,79,110 
-`\|-  UserShowRemoveDialog.jsx` |     100 |      100 |     100 |     100 |                    
-`\|-  UserShowUpdate.jsx`       |     100 |     87.5 |     100 |     100 | 69                 
-`lib`                           |     100 |      100 |     100 |     100 |                    
-`\|-  constants.js`             |     100 |      100 |     100 |     100 |                    
+Specifically (expanded as appropriate):
+
+File                           | % Stmts | % Branch | % Funcs | % Lines 
+-------------------------------|---------|----------|---------|---------
+ `components/admin`            |       0 |        0 |       0 |       0 
+ `components/layout`           |   80.77 |       75 |   55.56 |   80.77
+ `...ContentLoading.jsx`       |     100 |      100 |     100 |     100
+ `...Footer.jsx`               |     100 |       50 |     100 |     100
+ `...Header.jsx`               |   58.33 |      100 |      20 |   58.33
+ `...Layout.jsx`               |     100 |      100 |     100 |     100
+ `...MyModal.jsx`              |     100 |      100 |     100 |     100
+ `components/testing`          |     100 |    98.46 |     100 |     100
+ `...SWRTest.jsx`              |     100 |    98.46 |     100 |     100
+ `components/user`             |   83.33 |    83.33 |   66.67 |   83.33
+ `...SignInNextAuth.jsx`       |   83.33 |    83.33 |   66.67 |   83.33
+ `components/user/portal`      |   97.18 |     91.4 |   92.86 |   97.14
+ `...UserPortal.jsx`           |   71.43 |    77.27 |      50 |   71.43
+ `...UserShowCard.jsx`         |     100 |      100 |     100 |     100
+ `...UserShowEpisode.jsx`      |     100 |      100 |     100 |     100
+ `...UserShowList.jsx`         |     100 |      100 |     100 |     100
+ `...UserShowModal.jsx`        |     100 |       95 |     100 |     100
+ `...UserShowRemoveDialog.jsx` |     100 |      100 |     100 |     100
+ `...UserShowUpdate.jsx`       |     100 |     87.5 |     100 |     100
+ `components/user/search`      |      25 |    14.29 |      10 |      25
+ `...SearchShowCard.jsx`       |    12.5 |        0 |       0 |    12.5
+ `...SearchShowForm.jsx`       |      40 |      100 |       0 |      40
+ `...SearchShowList.jsx`       |      40 |        0 |       0 |      40
+ `...SearchShowModal.jsx`      |   30.77 |     37.5 |   33.33 |   30.77
+ `lib`                         |     100 |      100 |     100 |     100
+ `...constants.js`             |     100 |      100 |     100 |     100
+ `...fetcher.js`               |     100 |      100 |     100 |     100
+ `lib/hooks`                   |     100 |      100 |     100 |     100
+ `...useUser.js`               |     100 |      100 |     100 |     100
+ `pages`                       |      90 |      100 |   66.67 |     100
+ `...about.jsx`                |     100 |      100 |     100 |     100
+ `...index.jsx`                |    87.5 |      100 |      50 |     100
+`pages/api`                    |       0 |        0 |       0 |       0 
 
 ## To Do
 
