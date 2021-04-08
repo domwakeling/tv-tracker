@@ -154,10 +154,11 @@ matching items in **users** collection &mdash; this is effectively to deal with 
 The project uses [Jest](https://jestjs.io) and [React Testing Library](https://testing-library.com)
 for tests.
 
-At present tests **partly** cover the `components/user/portal` folder, with circa 90% coverage *for
-files that are being tested* - but only circa 55-60% coverage of all 'business logic' and UI. The aim
-is to expand this such that the `components` folder and (ideally) the `pages/api` folder are fully
-covered, although the latter is dependent on working out how to properly mock a MongoDB back end.
+At present tests **partly** cover the `components`, `lib` and `pages` folders, with circa 95%
+coverage *for files that are being tested* - but only circa 60-65% coverage of all 'business logic'
+and UI. The aim is to expand this such that the `components` folder and (ideally) the `pages/api`
+folder are fully covered, although the latter is dependent on working out how to properly mock a
+MongoDB back end.
 
 Specifically (expanded as appropriate):
 
@@ -182,11 +183,11 @@ File                           | % Stmts | % Branch | % Funcs | % Lines
  `...UserShowModal.jsx`        |     100 |       95 |     100 |     100
  `...UserShowRemoveDialog.jsx` |     100 |      100 |     100 |     100
  `...UserShowUpdate.jsx`       |     100 |     87.5 |     100 |     100
- `components/user/search`      |      50 |    42.86 |      50 |      50
- `...SearchShowCard.jsx`       |    37.5 |       50 |   33.33 |    37.5
- `...SearchShowForm.jsx`       |      80 |      100 |      50 |      80
- `...SearchShowList.jsx`       |      80 |       40 |      50 |      80
- `...SearchShowModal.jsx`      |      50 |     37.5 |   66.67 |      50
+ `components/user/search`      |      95 |    85.71 |     100 |      95
+ `...SearchShowCard.jsx`       |   91.67 |     87.5 |     100 |   91.67
+ `...SearchShowForm.jsx`       |     100 |      100 |     100 |     100
+ `...SearchShowList.jsx`       |     100 |       80 |     100 |     100
+ `...SearchShowModal.jsx`      |   96.15 |     87.5 |     100 |   96.15
  `lib`                         |     100 |      100 |     100 |     100
  `...constants.js`             |     100 |      100 |     100 |     100
  `...fetcher.js`               |     100 |      100 |     100 |     100

@@ -31,22 +31,22 @@ const SearchShowCard = (props) => {
 
             if (show === null) {
                 // Show isn't already stored, so get details from OMDB
-                res = await axios(`api/shows/getshowinfo/${id}`);
+                res = await axios(`/api/shows/getshowinfo/${id}`);
                 // eslint-disable-next-line prefer-destructuring
                 show = res.data;
 
                 // Store data in Mongodb
-                res = await axios.post('api/shows/saveshowtodb', { show });
+                res = await axios.post('/api/shows/saveshowtodb', { show });
                 show = res.data;
             }
 
             // Send the user's _id and show details to 'addshow'
-            res = await axios.post('api/user/addshow', {
+            res = await axios.post('/api/user/addshow', {
                 _id: userId,
                 show
             });
 
-            mutate(`api/user/accesstoken/${session.accessToken}`);
+            mutate(`/api/user/accesstoken/${session.accessToken}`);
             setUpdating(false);
             // eslint-disable-next-line no-empty-function
             modalCloseHandler({ preventDefault: () => {} });
@@ -59,7 +59,10 @@ const SearchShowCard = (props) => {
     };
 
     return (
-        <Card raised>
+        <Card
+            data-testid="search-show-card"
+            raised
+        >
             <CardMedia
                 component="img"
                 height={matches
