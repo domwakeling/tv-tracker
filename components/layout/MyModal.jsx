@@ -43,7 +43,7 @@ const MyModal = ({ ariaD, ariaL, children, modalCloseHandler, openState }) => (
 MyModal.propTypes = {
     ariaD: PropTypes.string,
     ariaL: PropTypes.string,
-    children: PropTypes.array.isRequired,
+    children: PropTypes.node.isRequired,
     modalCloseHandler: PropTypes.func.isRequired,
     openState: PropTypes.bool.isRequired
 };

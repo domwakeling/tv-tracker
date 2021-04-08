@@ -9,6 +9,7 @@ import * as swr from 'swr';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import UserShowList from '../portal/UserShowList.jsx';
 import axios from 'axios';
+import dummyShows from '../../../__mocks__/dummyShows';
 import mediaQuery from 'css-mediaquery';
 
 jest.mock('axios');
@@ -34,44 +35,11 @@ describe('Testing UserShowList', () => {
         />
     );
 
-    const shows = [
-        {
-            _id: '1',
-            episodes: [5, 5],
-            lastEpisode: {
-                episode: 0,
-                season: 0
-            },
-            lastWatched: 0,
-            title: 'Show 1'
-        },
-        {
-            _id: '2',
-            episodes: [5, 5, 5],
-            lastEpisode: {
-                episode: 5,
-                season: 3
-            },
-            lastWatched: 1,
-            title: 'Show 2'
-        },
-        {
-            _id: '3',
-            episodes: [3, 3, 3],
-            lastEpisode: {
-                episode: 3,
-                season: 2
-            },
-            lastWatched: 2,
-            title: 'Show 3'
-        }
-    ];
-
     const dummyList2 = (
         <UserShowList
             accessToken="accessToken2"
             userId="2"
-            userShows={shows}
+            userShows={dummyShows}
         />
     );
 
@@ -169,7 +137,7 @@ describe('Testing UserShowList', () => {
     // Check that modal updates for shows and is removed when "Update" is clicked
     const dummyShowInfo = (showId) => {
         // eslint-disable-next-line prefer-destructuring
-        const show = shows.filter((item) => item._id === showId)[0];
+        const show = dummyShows.filter((item) => item._id === showId)[0];
         const dummyShow = {
             seasonsInfo: [],
             showInfo: {

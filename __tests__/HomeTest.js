@@ -1,12 +1,13 @@
+/* eslint-disable max-statements */
 /* eslint-disable no-import-assign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-magic-numbers */
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { signIn, useSession } from 'next-auth/client';
 import Home from '../pages/index.jsx';
 import dummySession from '../__mocks__/dummySession';
 import dummyShows from '../__mocks__/dummyShows';
-import { useSession } from 'next-auth/client';
 import useUser from '../lib/hooks/useUser';
 
 jest.mock('../lib/hooks/useUser');
@@ -53,6 +54,16 @@ describe('Testing Home', () => {
         expect(screen.getAllByTestId('sign-in-button')).toHaveLength(Object.keys(providerList).length);
     });
 
+    test('call signIn when button clicked', async () => {
+        useSession.mockReturnValue([null, false]);
+        render(<Home providerList={providerList} />);
+        useSessionCalls += 2;
+        await waitFor(() => expect(useSession).toHaveBeenCalledTimes(useSessionCalls));
+        // Expect to be presented with sign-in options matching providerList
+        fireEvent.click(screen.getByText(/GitHub/u));
+        await waitFor(() => expect(signIn).toHaveBeenLastCalledWith('github'));
+    });
+
     test('show a loading icon whilst loading', async () => {
         useSession.mockReturnValue([null, true]);
         render(<Home providerList={providerList} />);
@@ -83,5 +94,26 @@ describe('Testing Home', () => {
         expect(screen.getAllByTestId('user-card')).toHaveLength(dummyShows.length);
     });
 
+    test('open a search modal if "add show" clicked, closes when "close" hit', async () => {
+        useSession.mockReturnValue([dummySession, false]);
+        useUser.mockImplementation(() => ({
+            isError: false,
+            isLoading: false,
+            user: dummyUser
+        }));
+        render(<Home providerList={providerList} />);
+        useSessionCalls += 3;
+        useUserCalls += 1;
+        await waitFor(() => expect(useSession).toHaveBeenCalledTimes(useSessionCalls));
+        await waitFor(() => expect(useUser).toHaveBeenCalledTimes(useUserCalls));
+        // Clicking "add show" should open a modal => addl header element
+        const numHeaders = screen.queryAllByRole('heading').length;
+        fireEvent.click(screen.getByText('Add a show'));
+        expect(screen.getAllByRole('heading')).toHaveLength(numHeaders + 1);
+        // Clicking on the close button in the modal should remove that header again
+        const modal = within(screen.getByTestId('add-show'));
+        fireEvent.click(modal.getAllByRole('button')[0]);
+        await waitFor(() => expect(screen.getAllByRole('heading')).toHaveLength(numHeaders));
+    });
 
 });

@@ -70,6 +70,7 @@ const Header = () => {
                                 aria-controls="profile-menu"
                                 aria-haspopup="true"
                                 color="inherit"
+                                data-testid="user-icon"
                                 onClick={hideShowMenu}
                             >
                                 <AccountCircleIcon fontSize="large" />
@@ -77,6 +78,7 @@ const Header = () => {
                         </Tooltip>}
                     <Menu
                         anchorEl={anchorEl}
+                        data-testid="user-icon-menu"
                         id="profile-menu"
                         keepMounted
                         onClose={handleClose}

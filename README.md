@@ -46,7 +46,7 @@ data to IMDb, but is available open source. I'm presently using the *absolutely 
 is rate-limited to 1,000 queries per day, but the developer uses Patreon and opens up much larger
 rate limits (100,000 queries per day at £1/month, for instance).
 
-Documentation is s touch sparse (for instance the main docs don't mention that there's a query
+Documentation is a touch sparse (for instance the main docs don't mention that there's a query
 parameter `&season=<num>` to get a complete episode list for a given season of a given show) but
 between the documents and the changelog there's enough there to work it out.
 
@@ -154,8 +154,8 @@ matching items in **users** collection &mdash; this is effectively to deal with 
 The project uses [Jest](https://jestjs.io) and [React Testing Library](https://testing-library.com)
 for tests.
 
-At present tests **partly** cover the `components/user/portal` folder, with circa 80% coverage *for
-files that are being tested* - but only circa 50% coverage of all 'business logic' and UI. The aim
+At present tests **partly** cover the `components/user/portal` folder, with circa 85% coverage *for
+files that are being tested* - but only circa 55% coverage of all 'business logic' and UI. The aim
 is to expand this such that the `components` folder and (ideally) the `pages/api` folder are fully
 covered, although the latter is dependent on working out how to properly mock a MongoDB back end.
 
@@ -164,29 +164,29 @@ Specifically (expanded as appropriate):
 File                           | % Stmts | % Branch | % Funcs | % Lines 
 -------------------------------|---------|----------|---------|---------
  `components/admin`            |       0 |        0 |       0 |       0 
- `components/layout`           |   80.77 |       75 |   55.56 |   80.77
+ `components/layout`           |   96.15 |       75 |   88.89 |   96.15
  `...ContentLoading.jsx`       |     100 |      100 |     100 |     100
  `...Footer.jsx`               |     100 |       50 |     100 |     100
- `...Header.jsx`               |   58.33 |      100 |      20 |   58.33
+ `...Header.jsx`               |   91.67 |      100 |      80 |   91.67
  `...Layout.jsx`               |     100 |      100 |     100 |     100
  `...MyModal.jsx`              |     100 |      100 |     100 |     100
  `components/testing`          |     100 |    98.46 |     100 |     100
  `...SWRTest.jsx`              |     100 |    98.46 |     100 |     100
- `components/user`             |   83.33 |    83.33 |   66.67 |   83.33
- `...SignInNextAuth.jsx`       |   83.33 |    83.33 |   66.67 |   83.33
- `components/user/portal`      |   97.18 |     91.4 |   92.86 |   97.14
- `...UserPortal.jsx`           |   71.43 |    77.27 |      50 |   71.43
+ `components/user`             |     100 |    83.33 |     100 |     100
+ `...SignInNextAuth.jsx`       |     100 |    83.33 |     100 |     100
+ `components/user/portal`      |   98.59 |     91.4 |   97.62 |   98.57
+ `...UserPortal.jsx`           |   85.71 |    77.27 |   83.33 |   85.71
  `...UserShowCard.jsx`         |     100 |      100 |     100 |     100
  `...UserShowEpisode.jsx`      |     100 |      100 |     100 |     100
  `...UserShowList.jsx`         |     100 |      100 |     100 |     100
  `...UserShowModal.jsx`        |     100 |       95 |     100 |     100
  `...UserShowRemoveDialog.jsx` |     100 |      100 |     100 |     100
  `...UserShowUpdate.jsx`       |     100 |     87.5 |     100 |     100
- `components/user/search`      |      25 |    14.29 |      10 |      25
+ `components/user/search`      |      40 |    23.81 |      40 |      40
  `...SearchShowCard.jsx`       |    12.5 |        0 |       0 |    12.5
- `...SearchShowForm.jsx`       |      40 |      100 |       0 |      40
- `...SearchShowList.jsx`       |      40 |        0 |       0 |      40
- `...SearchShowModal.jsx`      |   30.77 |     37.5 |   33.33 |   30.77
+ `...SearchShowForm.jsx`       |      80 |      100 |      50 |      80
+ `...SearchShowList.jsx`       |      80 |       40 |      50 |      80
+ `...SearchShowModal.jsx`      |      50 |     37.5 |   66.67 |      50
  `lib`                         |     100 |      100 |     100 |     100
  `...constants.js`             |     100 |      100 |     100 |     100
  `...fetcher.js`               |     100 |      100 |     100 |     100
@@ -201,14 +201,14 @@ File                           | % Stmts | % Branch | % Funcs | % Lines
 
 1. Complete the `checkshowinfo` end point - at present it does not know how to deal with additional
    seasons
-1. Admin portal - list of shows, last updated
-1. Admin portal - ability to update show, mark show as over (no further seasons)
 1. `checkshowinfo` should also see whether there's a new show poster and if so change it?
 1. Consider whether it's preferable/advisable to have a list of user `_id`s within each show so that
    we don't have to search for users who contain that show? Upside is making it easier to update
    info for those users, downside is that it introduces two sets of data and potential for clashes
-1. Add pagination of shows (which could be a very long list) for the Admin portal, and consider
-   doing the same for the User portal - at the moment its fine but what happens when you have 200
-   shows in your list?
+1. Look at having multiple lists and/or a category selection tool on the Admin page so that the list
+   of shows is more focussed and "handleable"; also look at labelling of "show over" (and maybe some
+   automation?) - show may be "over" whilst between seasons?
+1. Consider adding pagination of shows to the User portal - at the moment its fine but what happens
+   when you have 200 shows in your list?
 1. Also consider whether to have a 'recently watched' section (full size images) and then 'current'
    and 'watched' with ever-reducing card sizes?
