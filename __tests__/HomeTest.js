@@ -6,6 +6,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { signIn, useSession } from 'next-auth/client';
 import Home from '../pages/index.jsx';
+import Router from 'next/router';
 import dummySession from '../__mocks__/dummySession';
 import dummyShows from '../__mocks__/dummyShows';
 import useUser from '../lib/hooks/useUser';
@@ -13,6 +14,7 @@ import useUser from '../lib/hooks/useUser';
 jest.mock('../lib/hooks/useUser');
 jest.mock('../lib/Link');
 jest.mock('next-auth/client');
+jest.mock('next/router');
 
 describe('Testing Home', () => {
 
@@ -40,9 +42,16 @@ describe('Testing Home', () => {
 
     const dummyUser = {
         _id: '1',
-        roles: {},
+        roles: { admin: true },
         showIds,
         shows: dummyShows
+    };
+
+    const dummyUser2 = {
+        _id: '1',
+        roles: { admin: true },
+        showIds: [],
+        shows: []
     };
 
     test('show a login screen when no session / not loading', async () => {
@@ -114,6 +123,40 @@ describe('Testing Home', () => {
         const modal = within(screen.getByTestId('add-show'));
         fireEvent.click(modal.getAllByRole('button')[0]);
         await waitFor(() => expect(screen.getAllByRole('heading')).toHaveLength(numHeaders));
+    });
+
+    test('sends to admin page', async () => {
+        useSession.mockReturnValue([dummySession, false]);
+        useUser.mockImplementation(() => ({
+            isError: false,
+            isLoading: false,
+            user: dummyUser
+        }));
+        render(<Home providerList={providerList} />);
+        useSessionCalls += 5;
+        useUserCalls += 3;
+        await waitFor(() => expect(useSession).toHaveBeenCalledTimes(useSessionCalls));
+        await waitFor(() => expect(useUser).toHaveBeenCalledTimes(useUserCalls));
+        // Click on the Admin Tools button
+        fireEvent.click(screen.getByText('Admin tools'));
+        await waitFor(() => expect(Router.push).toHaveBeenCalledTimes(1));
+        expect(Router.push).toHaveBeenLastCalledWith('/admin');
+    });
+
+    test('user with no shows has "add a show" message', async () => {
+        useSession.mockReturnValue([dummySession, false]);
+        useUser.mockImplementation(() => ({
+            isError: false,
+            isLoading: false,
+            user: dummyUser2
+        }));
+        render(<Home providerList={providerList} />);
+        useSessionCalls += 3;
+        useUserCalls += 1;
+        await waitFor(() => expect(useSession).toHaveBeenCalledTimes(useSessionCalls));
+        await waitFor(() => expect(useUser).toHaveBeenCalledTimes(useUserCalls));
+        // Should have "add a show" message
+        expect(screen.getByText('Add a show to get started ...'));
     });
 
 });

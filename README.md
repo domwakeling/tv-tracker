@@ -154,8 +154,8 @@ matching items in **users** collection &mdash; this is effectively to deal with 
 The project uses [Jest](https://jestjs.io) and [React Testing Library](https://testing-library.com)
 for tests.
 
-At present tests **partly** cover the `components/user/portal` folder, with circa 85% coverage *for
-files that are being tested* - but only circa 55% coverage of all 'business logic' and UI. The aim
+At present tests **partly** cover the `components/user/portal` folder, with circa 90% coverage *for
+files that are being tested* - but only circa 55-60% coverage of all 'business logic' and UI. The aim
 is to expand this such that the `components` folder and (ideally) the `pages/api` folder are fully
 covered, although the latter is dependent on working out how to properly mock a MongoDB back end.
 
@@ -164,9 +164,9 @@ Specifically (expanded as appropriate):
 File                           | % Stmts | % Branch | % Funcs | % Lines 
 -------------------------------|---------|----------|---------|---------
  `components/admin`            |       0 |        0 |       0 |       0 
- `components/layout`           |   96.15 |       75 |   88.89 |   96.15
+ `components/layout`           |   96.15 |      100 |   88.89 |   96.15
  `...ContentLoading.jsx`       |     100 |      100 |     100 |     100
- `...Footer.jsx`               |     100 |       50 |     100 |     100
+ `...Footer.jsx`               |     100 |      100 |     100 |     100
  `...Header.jsx`               |   91.67 |      100 |      80 |   91.67
  `...Layout.jsx`               |     100 |      100 |     100 |     100
  `...MyModal.jsx`              |     100 |      100 |     100 |     100
@@ -174,16 +174,16 @@ File                           | % Stmts | % Branch | % Funcs | % Lines
  `...SWRTest.jsx`              |     100 |    98.46 |     100 |     100
  `components/user`             |     100 |    83.33 |     100 |     100
  `...SignInNextAuth.jsx`       |     100 |    83.33 |     100 |     100
- `components/user/portal`      |   98.59 |     91.4 |   97.62 |   98.57
- `...UserPortal.jsx`           |   85.71 |    77.27 |   83.33 |   85.71
+ `components/user/portal`      |     100 |    93.55 |     100 |     100
+ `...UserPortal.jsx`           |     100 |    86.36 |     100 |     100
  `...UserShowCard.jsx`         |     100 |      100 |     100 |     100
  `...UserShowEpisode.jsx`      |     100 |      100 |     100 |     100
  `...UserShowList.jsx`         |     100 |      100 |     100 |     100
  `...UserShowModal.jsx`        |     100 |       95 |     100 |     100
  `...UserShowRemoveDialog.jsx` |     100 |      100 |     100 |     100
  `...UserShowUpdate.jsx`       |     100 |     87.5 |     100 |     100
- `components/user/search`      |      40 |    23.81 |      40 |      40
- `...SearchShowCard.jsx`       |    12.5 |        0 |       0 |    12.5
+ `components/user/search`      |      50 |    42.86 |      50 |      50
+ `...SearchShowCard.jsx`       |    37.5 |       50 |   33.33 |    37.5
  `...SearchShowForm.jsx`       |      80 |      100 |      50 |      80
  `...SearchShowList.jsx`       |      80 |       40 |      50 |      80
  `...SearchShowModal.jsx`      |      50 |     37.5 |   66.67 |      50

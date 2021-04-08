@@ -82,6 +82,7 @@ describe('Testing Header', () => {
         // Click on the About button
         fireEvent.click(screen.getByText('About'));
         await waitFor(() => expect(Router.push).toHaveBeenCalledTimes(1));
+        expect(Router.push).toHaveBeenLastCalledWith('/about');
     });
 
 });
