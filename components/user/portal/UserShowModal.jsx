@@ -69,7 +69,7 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
         };
         const res = await axios.post('/api/user/removeshow/', updateBody);
         if (res.status === constants.RESPONSE_OK) {
-            mutate(`api/user/accesstoken/${accessToken}`);
+            mutate(`/api/user/accesstoken/${accessToken}`);
         }
         dialogCloseHandler({ preventDefault: () => { } });
         modalCloseHandler({ preventDefault: () => { } });
@@ -144,7 +144,7 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
         };
         const res = await axios.post('/api/user/updateshow/', updateBody);
         if (res.status === constants.RESPONSE_OK) {
-            mutate(`api/user/accesstoken/${accessToken}`);
+            mutate(`/api/user/accesstoken/${accessToken}`);
         }
         setSpinning(false);
         modalCloseHandler({ preventDefault: () => {} });
