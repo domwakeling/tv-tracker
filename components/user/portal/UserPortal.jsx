@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
@@ -5,6 +6,7 @@ import * as constants from '../../../lib/constants';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ContentLoading from '../../layout/ContentLoading.jsx';
+import MySnackbar from '../../layout/MySnackbar.jsx';
 import Router from 'next/router';
 import SearchShowModal from '../search/SearchShowModal.jsx';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +19,10 @@ const UserPortal = () => {
     const [session] = useSession();
     const { user, isLoading, isError } = useUser((session && session.accessToken) || null);
     const [modalOpen, setModalOpen] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('default message');
+    const [snackbarType, setSnackbarType] = useState('error');
+    const [snackbarDuration, setSnackbarDuration] = useState(constants.DURATION);
 
     const handleModalOpen = () => {
         setModalOpen(true);
@@ -31,8 +37,22 @@ const UserPortal = () => {
         Router.push('/admin');
     };
 
+    const showSnackbar = (settings) => {
+        setSnackbarMessage(settings.message || 'this is my message');
+        setSnackbarOpen(true);
+        setSnackbarType((settings.type) || 'error');
+        setSnackbarDuration(settings.duration || constants.DURATION);
+    };
+
     return (
         <>
+            <MySnackbar
+                duration={snackbarDuration}
+                message={snackbarMessage}
+                openState={snackbarOpen}
+                setOpenState={setSnackbarOpen}
+                type={snackbarType}
+            />
             {/* If the SWR is loading, show it */}
             { isLoading && <ContentLoading />}
             {/* Otherwise ... */}
@@ -78,6 +98,7 @@ const UserPortal = () => {
                     <SearchShowModal
                         onCloseHandler={handleModalClose}
                         openState={modalOpen}
+                        snackbarHandler={showSnackbar}
                         userId={user._id}
                         userShows={user.showIds}
                     />
@@ -90,6 +111,7 @@ const UserPortal = () => {
                     </Typography>
                     <UserShowList
                         accessToken={session.accessToken}
+                        snackbarHandler={showSnackbar}
                         userId={user._id}
                         userShows={user.shows.filter((show) => (
                             show.lastEpisode.season !== show.episodes.length ||
@@ -107,6 +129,7 @@ const UserPortal = () => {
                     </Typography>
                     <UserShowList
                         accessToken={session.accessToken}
+                        snackbarHandler={showSnackbar}
                         userId={user._id}
                         userShows={user.shows.filter((show) => (
                             show.lastEpisode.season === show.episodes.length &&

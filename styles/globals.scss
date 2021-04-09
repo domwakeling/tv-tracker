@@ -27,3 +27,29 @@ body {
 html {
   overflow-y: scroll;
 }
+
+.snackbar.error {
+  .MuiSnackbarContent-root {
+    background-color: #f44336;
+    color: white;
+  }
+}
+
+.snackbar.success {
+  .MuiSnackbarContent-root {
+    background-color: #4caf50;
+  }
+}
+
+.snackbar.warn {
+  .MuiSnackbarContent-root {
+    background-color: #ffeb3b;
+    color: black;
+  }
+}
+
+.snackbar.info {
+  .MuiSnackbarContent-root {
+    background-color: #2682f2;
+  }
+}
