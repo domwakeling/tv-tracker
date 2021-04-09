@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable max-statements */
 import * as constants from '../../../lib/constants';
 import Box from '@material-ui/core/Box';
@@ -13,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import { useState } from 'react';
 
-const SearchShowModal = ({ onCloseHandler, openState, userId, userShows }) => {
+const SearchShowModal = ({ onCloseHandler, openState, snackbarHandler, userId, userShows }) => {
     const [shows, setShows] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(false);
@@ -32,10 +33,12 @@ const SearchShowModal = ({ onCloseHandler, openState, userId, userShows }) => {
                 } else {
                     setShows({ error: 'Search error' });
                     setLoading(false);
+                    snackbarHandler({ message: 'search failed, please try again' });
                 }
             } catch (err) {
                 setShows({ error: 'Search error' });
                 setLoading(false);
+                snackbarHandler({ message: 'search failed, please try again' });
             }
         }
     };
@@ -105,6 +108,7 @@ const SearchShowModal = ({ onCloseHandler, openState, userId, userShows }) => {
                                 <SearchShowList
                                     foundShows={shows}
                                     modalCloseHandler={modalCloseHandler}
+                                    snackbarHandler={snackbarHandler}
                                     userId={userId}
                                     userShows={userShows}
                                 />}
@@ -119,8 +123,13 @@ const SearchShowModal = ({ onCloseHandler, openState, userId, userShows }) => {
 SearchShowModal.propTypes = {
     onCloseHandler: PropTypes.func.isRequired,
     openState: PropTypes.bool.isRequired,
+    snackbarHandler: PropTypes.func,
     userId: PropTypes.string.isRequired,
     userShows: PropTypes.arrayOf(PropTypes.string).isRequired
+};
+
+SearchShowModal.defaultProps = {
+    snackbarHandler: () => {}
 };
 
 export default SearchShowModal;

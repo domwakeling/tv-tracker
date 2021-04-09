@@ -1,6 +1,8 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-statements */
 /* eslint-disable no-extra-parens */
+import * as constants from '../../../lib/constants';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -17,7 +19,7 @@ import { useSession } from 'next-auth/client';
 import { useState } from 'react';
 
 const SearchShowCard = (props) => {
-    const { id, imageUrl, modalCloseHandler, title, userHas, userId } = props;
+    const { id, imageUrl, modalCloseHandler, snackbarHandler, title, userHas, userId } = props;
     const [session] = useSession();
     const [updating, setUpdating] = useState(false);
     const matches = useMediaQuery('(max-width:959px)');
@@ -48,13 +50,18 @@ const SearchShowCard = (props) => {
 
             mutate(`/api/user/accesstoken/${session.accessToken}`);
             setUpdating(false);
-            // eslint-disable-next-line no-empty-function
+            snackbarHandler({
+                duration: constants.BRIEF,
+                message: 'show added',
+                type: 'success'
+            });
             modalCloseHandler({ preventDefault: () => {} });
 
         } catch (err) {
             // eslint-disable-next-line no-console
             console.log('err: ', err.message);
             setUpdating(false);
+            snackbarHandler({ message: 'failed to add show, please try again' });
         }
     };
 
@@ -101,13 +108,15 @@ SearchShowCard.propTypes = {
     id: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
     modalCloseHandler: PropTypes.func.isRequired,
+    snackbarHandler: PropTypes.func,
     title: PropTypes.string.isRequired,
     userHas: PropTypes.bool.isRequired,
     userId: PropTypes.string.isRequired
 };
 
 SearchShowCard.defaultProps = {
-    imageUrl: null
+    imageUrl: null,
+    snackbarHandler: () => {}
 };
 
 export default SearchShowCard;

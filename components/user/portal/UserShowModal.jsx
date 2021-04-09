@@ -20,7 +20,7 @@ import UserShowUpdate from './UserShowUpdate.jsx';
 import axios from 'axios';
 import { mutate } from 'swr';
 
-const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHandler, openState, userId, userShows }) => {
+const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHandler, openState, snackbarHandler, userId, userShows }) => {
     const [lastSeen, setLastSeen] = useState({});
     const [activeShow, setActiveShow] = useState({});
     const [activeShowDetail, setActiveShowDetail] = useState({});
@@ -70,6 +70,15 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
         const res = await axios.post('/api/user/removeshow/', updateBody);
         if (res.status === constants.RESPONSE_OK) {
             mutate(`/api/user/accesstoken/${accessToken}`);
+            snackbarHandler({
+                duration: constants.BRIEF,
+                message: 'show removed',
+                type: 'success'
+            });
+        } else {
+            snackbarHandler({
+                message: 'unable to remove show'
+            });
         }
         dialogCloseHandler({ preventDefault: () => { } });
         modalCloseHandler({ preventDefault: () => { } });
@@ -145,6 +154,13 @@ const UserShowModal = ({ accessToken, episodeHeightPref, modalShowId, onCloseHan
         const res = await axios.post('/api/user/updateshow/', updateBody);
         if (res.status === constants.RESPONSE_OK) {
             mutate(`/api/user/accesstoken/${accessToken}`);
+            snackbarHandler({
+                duration: constants.BRIEF,
+                message: 'show updated',
+                type: 'success'
+            });
+        } else {
+            snackbarHandler({ message: 'unable to update show' });
         }
         setSpinning(false);
         modalCloseHandler({ preventDefault: () => {} });
@@ -256,12 +272,14 @@ UserShowModal.propTypes = {
     modalShowId: PropTypes.string,
     onCloseHandler: PropTypes.func.isRequired,
     openState: PropTypes.bool.isRequired,
+    snackbarHandler: PropTypes.func,
     userId: PropTypes.string.isRequired,
     userShows: PropTypes.arrayOf(PropTypes.shape()).isRequired
 };
 
 UserShowModal.defaultProps = {
-    modalShowId: null
+    modalShowId: null,
+    snackbarHandler: () => {}
 };
 
 export default UserShowModal;

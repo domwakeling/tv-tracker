@@ -47,6 +47,7 @@ UserShowCard.propTypes = {
     clickHandler: PropTypes.func.isRequired,
     heightPref: PropTypes.string.isRequired,
     show: PropTypes.shape().isRequired
+
 };
 
 export default UserShowCard;

@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable max-statements */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
@@ -9,7 +10,7 @@ import UserShowModal from './UserShowModal.jsx';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useState } from 'react';
 
-const UserShowList = ({ accessToken, userId, userShows }) => {
+const UserShowList = ({ accessToken, snackbarHandler, userId, userShows }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalShowId, setModalShowId] = useState(null);
 
@@ -82,6 +83,7 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
                 modalShowId={modalShowId}
                 onCloseHandler={handleModalClose}
                 openState={modalOpen}
+                snackbarHandler={snackbarHandler}
                 userId={userId}
                 userShows={userShows}
             />
@@ -91,8 +93,13 @@ const UserShowList = ({ accessToken, userId, userShows }) => {
 
 UserShowList.propTypes = {
     accessToken: PropTypes.string.isRequired,
+    snackbarHandler: PropTypes.func,
     userId: PropTypes.string.isRequired,
     userShows: PropTypes.arrayOf(PropTypes.shape()).isRequired
+};
+
+UserShowList.defaultProps = {
+    snackbarHandler: () => {}
 };
 
 export default UserShowList;

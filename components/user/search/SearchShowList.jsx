@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable no-extra-parens */
 import * as constants from '../../../lib/constants';
 import Grid from '@material-ui/core/Grid';
@@ -5,7 +6,7 @@ import PropTypes from 'prop-types';
 import SearchShowCard from './SearchShowCard.jsx';
 
 const SearchShowList = (props) => {
-    const { foundShows, modalCloseHandler, userId, userShows } = props;
+    const { foundShows, modalCloseHandler, snackbarHandler, userId, userShows } = props;
 
     return (
         <Grid
@@ -28,6 +29,7 @@ const SearchShowList = (props) => {
                             ? null
                             : show.Poster}
                         modalCloseHandler={modalCloseHandler}
+                        snackbarHandler={snackbarHandler}
                         title={show.Title}
                         userHas={userShows.indexOf(show.imdbID) >= constants.ZERO}
                         userId={userId}
@@ -41,8 +43,13 @@ const SearchShowList = (props) => {
 SearchShowList.propTypes = {
     foundShows: PropTypes.shape().isRequired,
     modalCloseHandler: PropTypes.func.isRequired,
+    snackbarHandler: PropTypes.func,
     userId: PropTypes.string.isRequired,
     userShows: PropTypes.arrayOf(PropTypes.string).isRequired
+};
+
+SearchShowList.defaultProps = {
+    snackbarHandler: () => {}
 };
 
 export default SearchShowList;
