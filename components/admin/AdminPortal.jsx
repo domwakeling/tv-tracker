@@ -1,31 +1,39 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
+import * as constants from '../../lib/constants';
 import AdminShowList from './AdminShowList.jsx';
 import ContentLoading from '../layout/ContentLoading.jsx';
+import MySnackbar from '../layout/MySnackbar.jsx';
 import Typography from '@material-ui/core/Typography';
 import { useSession } from 'next-auth/client';
+import { useState } from 'react';
 import useUser from '../../lib/hooks/useUser';
 
 const AdminPortal = () => {
     const [session] = useSession();
     const { user, isLoading, isError } = useUser((session && session.accessToken) || null);
-    // C const [modalOpen, setModalOpen] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('default message');
+    const [snackbarType, setSnackbarType] = useState('error');
+    const [snackbarDuration, setSnackbarDuration] = useState(constants.DURATION);
 
-    /*
-     * C const handleModalOpen = () => {
-     *     setModalOpen(true);
-     * };
-     */
-
-    /*
-     * C const handleModalClose = () => {
-     *     setModalOpen(false);
-     * };
-     */
+    const showSnackbar = (settings) => {
+        setSnackbarMessage(settings.message || 'this is my message');
+        setSnackbarOpen(true);
+        setSnackbarType((settings.type) || 'error');
+        setSnackbarDuration(settings.duration || constants.DURATION);
+    };
 
     return (
         <>
+            <MySnackbar
+                duration={snackbarDuration}
+                message={snackbarMessage}
+                openState={snackbarOpen}
+                setOpenState={setSnackbarOpen}
+                type={snackbarType}
+            />
             {/* If the SWR is loading, show it */}
             { isLoading && <ContentLoading /> }
             {/* If it's loaded and we haven't evaluated the user yet */}
@@ -40,6 +48,7 @@ const AdminPortal = () => {
             {/* Otherwise ... */}
             { !isLoading && user && user.roles && user.roles.admin &&
                 <AdminShowList
+                    snackbarHandler={showSnackbar}
                     title="Show List"
                     url="/api/shows/getallshowsfromdb"
                 />}

@@ -35,6 +35,7 @@ const MySnackbar = ({ duration, message, openState, setOpenState, type }) => {
                 autoHideDuration={duration}
                 // eslint-disable-next-line react/forbid-component-props
                 className={classes}
+                data-testid="snackbar"
                 message={message}
                 onClose={handleClose}
                 open={openState}

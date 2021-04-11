@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable complexity */
 /* eslint-disable no-extra-parens */
@@ -11,7 +12,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
-const AdminShowList = ({ title, url }) => {
+const AdminShowList = ({ snackbarHandler, title, url }) => {
     const [shows, setShows] = useState([]);
     const [firstLoad, setFirstLoad] = useState(false);
     const [allShows, setAllShows] = useState(false);
@@ -89,6 +90,7 @@ const AdminShowList = ({ title, url }) => {
                             key={show._id}
                             listUpdate={reloadShows}
                             show={show}
+                            snackbarHandler={snackbarHandler}
                         />
                     </Grid>
                 ))}
@@ -107,8 +109,13 @@ const AdminShowList = ({ title, url }) => {
 };
 
 AdminShowList.propTypes = {
+    snackbarHandler: PropTypes.func,
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired
+};
+
+AdminShowList.defaultProps = {
+    snackbarHandler: () => {}
 };
 
 export default AdminShowList;

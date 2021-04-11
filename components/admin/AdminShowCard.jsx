@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-statements */
 /* eslint-disable no-extra-parens */
@@ -13,7 +14,7 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
-const AdminShowCard = ({ listUpdate, show }) => {
+const AdminShowCard = ({ listUpdate, show, snackbarHandler }) => {
 
     const [checked, setChecked] = useState(true);
 
@@ -24,12 +25,16 @@ const AdminShowCard = ({ listUpdate, show }) => {
     }, []);
 
     const setShowOver = async (showOver) => {
-        await axios.post(
-            `/api/shows/setshowover/${show._id}`,
-            {
-                showOver
-            }
-        );
+        const ret = await axios.post(`/api/shows/setshowover/${show._id}`, { showOver });
+        if (ret.status === constants.RESPONSE_OK) {
+            snackbarHandler({
+                duration: constants.VERY_BRIEF,
+                message: 'show updated',
+                type: 'success'
+            });
+        } else {
+            snackbarHandler({ message: 'update failed, please try again' });
+        }
         return true;
     };
 
@@ -42,7 +47,16 @@ const AdminShowCard = ({ listUpdate, show }) => {
     };
 
     const handleShowUpdate = async () => {
-        await axios(`/api/shows/checkshowinfo/${show._id}`);
+        const ret = await axios(`/api/shows/checkshowinfo/${show._id}`);
+        if (ret.status === constants.RESPONSE_OK) {
+            snackbarHandler({
+                duration: constants.VERY_BRIEF,
+                message: 'show updated',
+                type: 'success'
+            });
+        } else {
+            snackbarHandler({ message: 'update failed, please try again' });
+        }
         listUpdate();
     };
 
@@ -130,12 +144,13 @@ const AdminShowCard = ({ listUpdate, show }) => {
 
 AdminShowCard.propTypes = {
     listUpdate: PropTypes.func,
-    show: PropTypes.shape().isRequired
+    show: PropTypes.shape().isRequired,
+    snackbarHandler: PropTypes.func
 };
 
 AdminShowCard.defaultProps = {
-    // eslint-disable-next-line no-empty-function
-    listUpdate: () => {}
+    listUpdate: () => {},
+    snackbarHandler: () => {}
 };
 
 export default AdminShowCard;
